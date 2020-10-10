@@ -24,6 +24,8 @@ int main(int argc, char** argv)
     SDL_Texture* textureArquera = SDL_CreateTextureFromSurface(renderer, arquera);
     SDL_Surface* mago = IMG_Load("Blue_Mage.png");
     SDL_Texture* textureMago = SDL_CreateTextureFromSurface(renderer, mago);
+    SDL_Surface* sanadora = IMG_Load("Sanadora.png");
+    SDL_Texture* textureSanadora = SDL_CreateTextureFromSurface(renderer, sanadora);
 
 
     SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
@@ -32,22 +34,32 @@ int main(int argc, char** argv)
     int posyM = 64;
     int posxA = 64;
     int posyA = 64;
+    int posxS = 96;
+    int posyS = 64;
+
+    struct mapa  {
+        
+        };
 
     while (!quit)
     {
-        /*Tiempo, GetTicks devuelve los milisegundos (1000=1seg) desde que comenzÛ el programa*/
+        /*Tiempo, GetTicks devuelve los milisegundos (1000=1seg) desde que comenz√≥ el programa*/
         Uint32 ticks = SDL_GetTicks();
-        Uint32 sprite = (ticks / 100) % 5;
-        SDL_Rect origenA = { sprite * 32, 0, 32, 32 };  
-        /*X y Y indican las cordenadas donde comenzar· la imagen recortada del spritesheet, 
-        W y H indican las cordenadas donde terminar· la imagen recortada del spritesheet.
-        Funciona asÌ, los ticks las milesimas que han pasado desde que empezÛ el programa, al hacer la divisiÛn y el mod se obtiene un n˙mero del 1-4,
-        asÌ el sprite al muliplicarse por 32 estar· recorriendo sprite por sprite, porque se movera de 1 en 1 los 32 pixeles en X y siempre comenzar· 0 en Y, Y no se mueve
-        porque es un vector, si fuera matriz se necesitaria una anidaciÛn*/
+        Uint32 sprite5 = (ticks / 100) % 5; 
+        SDL_Rect origenA = { sprite5 * 32, 0, 32, 32 };  
+        /*X y Y indican las cordenadas donde comenzar√° la imagen recortada del spritesheet, 
+        W y H indican las cordenadas donde terminar√° la imagen recortada del spritesheet.
+        Funciona as√≠, los ticks las milesimas que han pasado desde que empez√≥ el programa, al hacer la divisi√≥n y el mod se obtiene un n√∫mero del 1-4,
+        as√≠ el sprite al muliplicarse por 32 estar√° recorriendo sprite por sprite, porque se movera de 1 en 1 los 32 pixeles en X y siempre comenzar√° 0 en Y, Y no se mueve
+        porque es un vector, si fuera matriz se necesitaria una anidaci√≥n*/
         SDL_Rect destinoA = { posxA, posyA, 32, 32 };
 
-        SDL_Rect origenM = { sprite * 32, 0, 32, 32 };
+        SDL_Rect origenM = { sprite5 * 32, 0, 32, 32 };
         SDL_Rect destinoM = { posxM, posyM, 32, 32 };
+
+        SDL_Rect origenS = { sprite5 * 32, 0, 32, 32 };
+        SDL_Rect destinoS = { posxS, posyS, 32, 32 };
+
         //SDL_Rect origenB = { sprite * 32, 0, 32, 64 };
         //SDL_Rect origenB = { 10, 10, 32, 64 };
 
@@ -59,6 +71,7 @@ int main(int argc, char** argv)
                 quit = true;
                 break;
             case SDL_KEYDOWN:
+                /*Movimiento del Mago*/
                 if (event.key.keysym.sym == SDLK_RIGHT) {
                     posxM += 32;
                 }
@@ -71,17 +84,31 @@ int main(int argc, char** argv)
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     posyM += 32;
                 }
+                /*Movimiento de la Arquera*/
                 if (event.key.keysym.sym == SDLK_d) {
-                    posxA += 3;
+                    posxA += 32;
                 }
                 if (event.key.keysym.sym == SDLK_a) {
-                    posxA -= 3;
+                    posxA -= 32;
                 }
                 if (event.key.keysym.sym == SDLK_w) {
-                    posyA -= 3;
+                    posyA -= 32;
                 }
                 if (event.key.keysym.sym == SDLK_s) {
-                    posyA += 3;
+                    posyA += 32;
+                }
+                /*Movimiento de la Sanadora*/
+                if (event.key.keysym.sym == SDLK_l) {
+                    posxS += 32;
+                }
+                if (event.key.keysym.sym == SDLK_j) {
+                    posxS -= 32;
+                }
+                if (event.key.keysym.sym == SDLK_i) {
+                    posyS -= 32;
+                }
+                if (event.key.keysym.sym == SDLK_k) {
+                    posyS += 32;
                 }
                     
                 break;
@@ -90,7 +117,8 @@ int main(int argc, char** argv)
 
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, textureArquera, &origenA, &destinoA);
-        SDL_RenderCopy(renderer, textureMago, &origenM, &destinoM);
+        SDL_RenderCopy(renderer, textureMago, &origenM, &destinoM); 
+        SDL_RenderCopy(renderer, textureSanadora, &origenS, &destinoS);
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
