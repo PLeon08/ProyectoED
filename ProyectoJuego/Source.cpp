@@ -32,6 +32,15 @@ int main(int argc, char** argv)
     int posyM = 64;
     int posxA = 64;
     int posyA = 64;
+    int posxM = 32;
+    int posyM = 64;
+    int posxA = 64;
+    int posxM = 32;
+    int posyM = 64;
+    int posxA = 64;
+    int posyA = 64;
+    int posyA = 64;
+    int posSAnadora = 4;
 
     while (!quit)
     {
