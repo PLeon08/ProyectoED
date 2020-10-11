@@ -1,5 +1,6 @@
 ﻿  Source.cpp
-D:\Desktop\TEC\2° Semestre\Estructuras de Datos\ProyectoJuego\MagoMovimiento\Source.cpp(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-D:\Desktop\TEC\2° Semestre\Estructuras de Datos\ProyectoJuego\MagoMovimiento\Source.cpp(41,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
-D:\Desktop\TEC\2° Semestre\Estructuras de Datos\ProyectoJuego\MagoMovimiento\Source.cpp(49,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
-  MagoMovimiento.vcxproj -> D:\Desktop\TEC\2° Semestre\Estructuras de Datos\ProyectoJuego\MagoMovimiento\Debug\MagoMovimiento.exe
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(49,38): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(57,38): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(60,38): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+  MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
