@@ -18,10 +18,9 @@ SDL_Texture* texture;
 SDL_Surface* fondo;
 SDL_Texture* texturafondo;
 
-SDL_Rect srcrectF;
-SDL_Rect dstrectF;
-SDL_Rect srcrectvaya;
-SDL_Rect dscrectvaya;
+SDL_Rect rectFuente;
+SDL_Rect rectDestino;
+
 /*Fin Declaración*/
 
 /*0=suelo
@@ -55,94 +54,74 @@ int mapa[20][20] = {
     {1,1,1,1,1,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,11,0,4,0,0},
-    {3,3,3,3,3,3,5,0,1,5,1,0,6,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0} };
+    {3,3,3,3,3,3,5,0,0,5,1,0,6,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0}};
 
 void pintarmapa() {
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
-            if (mapa[i][j] == 0) {
-                SDL_Rect srcrectF = { 64, 1152, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-            }
-            if (mapa[i][j] == 1) {
-                SDL_Rect srcrect = { 64, 1184, 32, 32 };
-                SDL_Rect dstrect = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrect, &dstrect);
-            }
-            if (mapa[i][j] == 3) {
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 0, 864, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 4) { //muro vertical
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 0, 832, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
+            rectFuente = { 64, 1152, 32, 32 };//piso
+            rectDestino = { 32 * j, 32 * i, 32, 32 };
+            switch (mapa[i][j])
+            {
+            case 0://PISO
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 1://PISO2
+                rectFuente = { 64, 1184, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 2://HUEC0
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 3: //muro horizontal
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 0, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 4: //muro vertical
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 0, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 5://esquina inferior derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 6://esquina inferior izquiera
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 7://esquina superior derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 8://esquina superior izquierda
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 9: //llave
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 224, 4192, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 10://tesoro
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 3424, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 11://oso
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 4096, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
 
-            if (mapa[i][j] == 5) { //esquina inferior derecha
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 96, 864, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 6) { //esquina inferior izquiera
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 64, 864, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 7) { //esquina superior derecha
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 64, 832, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 8) { //esquina superior izquierda
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 96, 832, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 9) { //llave
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 224, 4192, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 10) { //tesoro
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 192, 3424, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
-            }
-            if (mapa[i][j] == 11) { //oso
-                SDL_Rect srcrectF = { 65, 1153, 32, 32 };
-                SDL_Rect dstrectF = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectF, &dstrectF);
-                SDL_Rect srcrectvaya = { 96, 4096, 32, 32 };
-                SDL_Rect dstrectvaya = { 32 * j, 32 * i, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &srcrectvaya, &dstrectvaya);
+            default:
+                break;
             }
         }
     }
