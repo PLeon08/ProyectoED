@@ -1,4 +1,5 @@
 ﻿  Source.cpp
 C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
 C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(180,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+  LINK : no se encontró C:\Users\nalle\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
   MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
