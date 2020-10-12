@@ -8,6 +8,7 @@
 
 int main(int argc, char** argv)
 {
+    int intento2;
     int intento=10;
     int bblin;
     int i = 10;
