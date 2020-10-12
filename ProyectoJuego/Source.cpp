@@ -9,6 +9,7 @@
 int main(int argc, char** argv)
 {
     int intento=10;
+    int bblin;
     int i = 10;
     bool quit = false;
     SDL_Event event;
