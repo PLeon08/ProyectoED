@@ -1,4 +1,59 @@
-﻿  Source.cpp
+﻿  mapa.cpp
 C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(158,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
-  MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,5): error C2143: error de sintaxis: falta ';' delante de '*'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,5): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,17): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(33,26): error C2061: error de sintaxis: identificador 'mapa'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(58,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\mapa.cpp(19,5): error C2372: 'mapaNivel1': nueva definición; distintos tipos de direccionamiento indirecto
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24): message : vea la declaración de 'mapaNivel1'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\mapa.cpp(46,20): error C2109: el subíndice requiere una matriz o tipo de puntero
+  Source.cpp
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,5): error C2143: error de sintaxis: falta ';' delante de '*'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,5): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,17): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(33,26): error C2061: error de sintaxis: identificador 'mapa'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(58,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(9,14): error C2086: 'const Uint8 *estadoteclado': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(9): message : vea la declaración de 'estadoteclado'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(10,5): error C2086: 'int posx': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(10): message : vea la declaración de 'posx'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(10,11): error C2086: 'int posy': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(10): message : vea la declaración de 'posy'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(11,6): error C2086: 'bool quit': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(11): message : vea la declaración de 'quit'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(12,11): error C2086: 'SDL_Event event': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(12): message : vea la declaración de 'event'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(13,13): error C2086: 'SDL_Window *window': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(13): message : vea la declaración de 'window'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(14,15): error C2086: 'SDL_Renderer *renderer': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(14): message : vea la declaración de 'renderer'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(15,14): error C2086: 'SDL_Surface *image': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(15): message : vea la declaración de 'image'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(16,14): error C2086: 'SDL_Texture *texture': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(16): message : vea la declaración de 'texture'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(18,14): error C2086: 'SDL_Surface *fondo': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(18): message : vea la declaración de 'fondo'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(19,14): error C2086: 'SDL_Texture *texturafondo': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(19): message : vea la declaración de 'texturafondo'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(21,10): error C2086: 'SDL_Rect rectFuente': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(21): message : vea la declaración de 'rectFuente'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(22,10): error C2086: 'SDL_Rect rectDestino': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(22): message : vea la declaración de 'rectDestino'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,5): error C2143: error de sintaxis: falta ';' delante de '*'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,5): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,1): error C2086: 'int mapa': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24): message : vea la declaración de 'mapa'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,17): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24,7): error C2086: 'int *mapaNivel1': nueva definición
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(24): message : vea la declaración de 'mapaNivel1'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(29,6): error C2084: la función 'void inicializar(void)' ya tiene un cuerpo
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(29): message : vea la definición anterior de 'inicializar'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(33,26): error C2061: error de sintaxis: identificador 'mapa'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(50,5): error C2084: la función 'int SDL_main(int,char *[])' ya tiene un cuerpo
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(50): message : vea la definición anterior de 'SDL_main'
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(53,5): error C2065: 'inicializar': identificador no declarado
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(58,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+  Generando código...
