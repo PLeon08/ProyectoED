@@ -3,53 +3,162 @@
 #include <SDL.h>
 #include <stdio.h>;
 #include <SDL_image.h>
-#include <string>
 
+
+/*Declaración*/
+const Uint8* estadoteclado;
+int posx, posy;
+bool quit;
+SDL_Event event;
+SDL_Window* window;
+SDL_Renderer* renderer;
+SDL_Surface* image;
+SDL_Texture* texture;
+
+SDL_Surface* fondo;
+SDL_Texture* texturafondo;
+
+SDL_Rect rectFuente;
+SDL_Rect rectDestino;
+
+/*Fin Declaración*/
+
+/*0=suelo
+  1=suelox2 
+  2=hueco
+  3=muro horizontal
+  4=muro vertical
+  5=esquina inferior derecha
+  6=esquina inferior izquierda
+  7=esquina superior derecha
+  8=esquina superior izquierda
+  9=llave
+  10=tesoro
+  */
+int mapa[20][20] = {
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+    {1,1,0,0,1,1,1,1,1,1,1,9,1,1,1,1,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,10},
+    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,1,1,7,3,3,3,3,3,8,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {1,1,1,1,1,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,11,0,4,0,0},
+    {3,3,3,3,3,3,5,0,0,5,1,0,6,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0}};
+
+void pintarmapa() {
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 20; j++) {
+            rectFuente = { 64, 1152, 32, 32 };//piso
+            rectDestino = { 32 * j, 32 * i, 32, 32 };
+            switch (mapa[i][j])
+            {
+            case 0://PISO
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 1://PISO2
+                rectFuente = { 64, 1184, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 2://HUEC0
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 3: //muro horizontal
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 0, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 4: //muro vertical
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 0, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 5://esquina inferior derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 6://esquina inferior izquiera
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 7://esquina superior derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 8://esquina superior izquierda
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 9: //llave
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 224, 4192, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 10://tesoro
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 3424, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 11://oso
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 4096, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+}
+
+void inicializar() {
+    quit = false;
+    posx = 0;
+    posy = 0;
+
+
+    SDL_Init(SDL_INIT_VIDEO);
+    IMG_Init(IMG_INIT_PNG);
+    estadoteclado = SDL_GetKeyboardState(NULL);
+
+    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 640, 0);
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    image = IMG_Load("Blue_Mage.png");
+    texture = SDL_CreateTextureFromSurface(renderer, image);
+
+    fondo = IMG_Load("fondos.png");
+    texturafondo = SDL_CreateTextureFromSurface(renderer, fondo);
+    //SDL_FreeSurface(fondo);
+    SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
+}
 
 int main(int argc, char** argv)
 {
-    int i = 10;
-    bool quit = false;
-    SDL_Event event;
 
-    SDL_Init(SDL_INIT_EVERYTHING);
-    IMG_Init(IMG_INIT_PNG);
-
-    SDL_Window* window = SDL_CreateWindow("SDL2 Moving Wizard",
-        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 480, 480, 0);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-
-    //Initialize variables
-    SDL_Surface* arquera = IMG_Load("Arquera.png");
-    SDL_Texture* textureArquera = SDL_CreateTextureFromSurface(renderer, arquera);
-    SDL_Surface* mago = IMG_Load("Blue_Mage.png");
-    SDL_Texture* textureMago = SDL_CreateTextureFromSurface(renderer, mago);
-
-
-    SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
-    SDL_RenderClear(renderer);
-    int posxM = 32;
-    int posyM = 64;
-    int posxA = 64;
-    int posyA = 64;
-
+    inicializar();
     while (!quit)
     {
-        /*Tiempo, GetTicks devuelve los milisegundos (1000=1seg) desde que comenzó el programa*/
         Uint32 ticks = SDL_GetTicks();
         Uint32 sprite = (ticks / 100) % 5;
-        SDL_Rect origenA = { sprite * 32, 0, 32, 32 };  
-        /*X y Y indican las cordenadas donde comenzará la imagen recortada del spritesheet, 
-        W y H indican las cordenadas donde terminará la imagen recortada del spritesheet.
-        Funciona así, los ticks las milesimas que han pasado desde que empezó el programa, al hacer la división y el mod se obtiene un número del 1-4,
-        así el sprite al muliplicarse por 32 estará recorriendo sprite por sprite, porque se movera de 1 en 1 los 32 pixeles en X y siempre comenzará 0 en Y, Y no se mueve
-        porque es un vector, si fuera matriz se necesitaria una anidación*/
-        SDL_Rect destinoA = { posxA, posyA, 32, 32 };
+        SDL_Rect srcrect = { sprite * 32, 0, 32, 32 };
+        SDL_Rect dstrect = { posx, posy, 32, 32 };
 
-        SDL_Rect origenM = { sprite * 32, 0, 32, 32 };
-        SDL_Rect destinoM = { posxM, posyM, 32, 32 };
-        //SDL_Rect origenB = { sprite * 32, 0, 32, 64 };
-        //SDL_Rect origenB = { 10, 10, 32, 64 };
 
         while (SDL_PollEvent(&event) != NULL)
         {
@@ -58,51 +167,37 @@ int main(int argc, char** argv)
             case SDL_QUIT:
                 quit = true;
                 break;
-            case SDL_KEYDOWN:
-                if (event.key.keysym.sym == SDLK_RIGHT) {
-                    posxM += 32;
-                }
-                if (event.key.keysym.sym == SDLK_LEFT) {
-                    posxM -= 32;
-                }
-                if (event.key.keysym.sym == SDLK_UP) {
-                    posyM -= 32;
-                }
-                if (event.key.keysym.sym == SDLK_DOWN) {
-                    posyM += 32;
-                }
-                if (event.key.keysym.sym == SDLK_d) {
-                    posxA += 3;
-                }
-                if (event.key.keysym.sym == SDLK_a) {
-                    posxA -= 3;
-                }
-                if (event.key.keysym.sym == SDLK_w) {
-                    posyA -= 3;
-                }
-                if (event.key.keysym.sym == SDLK_s) {
-                    posyA += 3;
-                }
-                    
-                break;
             }
         }
 
+        if (estadoteclado[SDL_SCANCODE_RIGHT]) {
+            posx += 1;
+        }
+        if (estadoteclado[SDL_SCANCODE_LEFT]) {
+            posx -= 1;
+        }
+        if (estadoteclado[SDL_SCANCODE_UP]) {
+            posy -= 1;
+        }
+        if (estadoteclado[SDL_SCANCODE_DOWN]) {
+            posy += 1;
+        }
+
         SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, textureArquera, &origenA, &destinoA);
-        SDL_RenderCopy(renderer, textureMago, &origenM, &destinoM);
+        pintarmapa();
+        SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
+
+
     }
 
-    SDL_DestroyTexture(textureArquera);
-    SDL_FreeSurface(arquera);
-    SDL_FreeSurface(mago);
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(image);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
-
     return 0;
 }
