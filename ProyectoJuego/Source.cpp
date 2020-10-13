@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <stdio.h>;
 #include <SDL_image.h>
-#include "mapa.hpp"
+
 
 /*Declaración*/
 const Uint8* estadoteclado;
@@ -21,16 +21,117 @@ SDL_Texture* texturafondo;
 SDL_Rect rectFuente;
 SDL_Rect rectDestino;
 
-mapa* mapaNivel1;
-
 /*Fin Declaración*/
 
+/*0=suelo
+  1=suelox2
+  2=hueco
+  3=muro horizontal
+  4=muro vertical
+  5=esquina inferior derecha
+  6=esquina inferior izquierda
+  7=esquina superior derecha
+  8=esquina superior izquierda
+  9=llave
+  10=tesoro
+  */
+int mapa[20][20] = {
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+    {1,1,0,0,1,1,1,1,1,1,1,9,1,1,1,1,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,10},
+    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,1,1,7,3,3,3,3,3,8,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {1,1,1,1,1,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,11,0,4,0,0},
+    {3,3,3,3,3,3,5,0,0,5,1,0,6,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0} };
+
+void pintarmapa() {
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 20; j++) {
+            rectFuente = { 64, 1152, 32, 32 };//piso
+            rectDestino = { 32 * j, 32 * i, 32, 32 };
+            switch (mapa[i][j])
+            {
+            case 0://PISO
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 1://PISO2
+                rectFuente = { 64, 1184, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 2://HUEC0
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 3: //muro horizontal
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 0, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 4: //muro vertical
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 0, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 5://esquina inferior derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 6://esquina inferior izquiera
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 7://esquina superior derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 8://esquina superior izquierda
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 9: //llave
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 224, 4192, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 10://tesoro
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 3424, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 11://oso
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 4096, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+}
 
 void inicializar() {
     quit = false;
     posx = 0;
     posy = 0;
-    mapaNivel1 = new mapa();
+
 
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
@@ -83,7 +184,7 @@ int main(int argc, char** argv)
         }
 
         SDL_RenderClear(renderer);
-        mapaNivel1->pintarmapa(renderer,texturafondo, rectFuente,rectDestino);
+        pintarmapa();
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
