@@ -21,6 +21,8 @@ SDL_Texture* texturafondo;
 SDL_Rect rectFuente;
 SDL_Rect rectDestino;
 
+int cambioborrar;
+
 /*Fin Declaración*/
 
 /*0=suelo
@@ -204,8 +206,6 @@ int main(int argc, char** argv)
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
-
-
     }
 
     SDL_DestroyTexture(texture);
