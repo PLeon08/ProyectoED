@@ -38,138 +38,147 @@ const char* Texto;
 
 /*Fin Declaración*/
 
-/*0=suelo
-  1=suelox2
-  2=hueco
-  3=muro horizontal
-  4=muro vertical
-  5=esquina inferior derecha
-  6=esquina inferior izquierda
-  7=esquina superior derecha
-  8=esquina superior izquierda
-  9=llave
-  10=tesoro
+/*
+  1= muro vertical
+  2= muro horizontal
+  3= muro esquina superior izq
+  4= muro esquina superior der
+  5= muro esquina inferior izq
+  6= muro esquina inferior der
+  7= muro final izquierda
+  8= muro final derecha
+  9= muro final abajo
+  10= muro final arriba
+  11= muro intersección izq, arriba, der
+  12= muro intersección izq, abajo, der
+  13= muro intersección izq, arriba, abajo
+  14= muro intersección der, arriba, abajo
+  15= muro intersección total
+  16= llave
+  17= cofre
+  18= calavera
+
   */
 
-
-
-
-
-
 int mapa[20][20] = {
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,1,1,1,1,0,0,0,2,0,0,0,0,0,0,1,1,0,2,0},
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,2,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-    {1,1,0,0,1,1,1,1,1,1,1,9,1,1,1,1,0,0,0,0},
-    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
-    {0,0,0,1,0,0,0,0,2,1,1,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,10},
-    {0,2,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
-    {0,0,0,1,1,1,7,3,3,3,3,3,8,0,0,0,0,0,0,0},
-    {0,0,0,0,2,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
-    {1,1,1,1,1,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,11,0,4,0,0},
-    {3,3,3,3,3,3,5,0,0,5,1,0,6,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0} };
+    {0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,16},
+    {0,10,0,7,2,2,2,11,2,4,0,10,0,14,2,2,8,0,1,0},
+    {0,1,0,0,0,0,0,0,0,5,12,6,0,1,0,0,0,0,1,0},
+    {0,5,2,2,2,2,2,4,0,0,1,0,0,1,0,0,0,0,1,0},
+    {0,0,0,0,0,0,0,5,2,2,6,0,3,6,0,7,4,0,9,0},
+    {0,3,2,2,2,4,0,0,0,0,0,0,1,0,0,0,1,0,0,0},
+    {0,9,0,0,0,5,4,0,7,2,12,2,6,0,10,0,5,2,2,2},
+    {0,0,0,10,0,0,1,0,0,18,1,0,0,0,1,0,0,0,0,0},
+    {2,4,0,5,4,0,5,2,2,2,6,0,3,2,15,2,2,2,2,2},
+    {0,1,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0},
+    {0,1,0,0,5,2,2,2,4,0,3,2,6,0,1,0,7,2,4,0},
+    {0,5,8,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0},
+    {0,0,0,0,7,2,4,0,14,2,6,0,10,0,5,12,2,2,6,0},
+    {2,2,4,0,0,0,1,0,1,0,0,0,1,0,18,1,0,0,0,0},
+    {17,0,9,0,0,0,1,0,1,0,7,2,11,2,2,6,0,7,4,0},
+    {0,0,0,0,10,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0},
+    {2,2,4,0,5,2,6,0,5,2,8,0,7,2,2,2,4,0,1,0},
+    {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,5,2},
+    {0,7,11,2,8,0,7,2,2,12,2,2,2,2,8,0,1,0,0,0},
+    {0,0,0,0,0,0,0,0,18,1,0,0,0,0,0,0,1,0,10,0}};
 
-int pintarmapa(SDL_Rect personaje) {
+
+void pintarmapa(SDL_Rect personaje) {
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
             rectFuente = { 64, 1152, 32, 32 };//piso
             rectDestino = { 32 * j, 32 * i, 32, 32 };
-            rectPanel = { 32 * j, 32 * i, 32, 32 };
             switch (mapa[i][j])
             {
-            case 0://PISO
+            case 0://Suelo
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 1://Pared
-                rectFuente = { 0, 1184, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 2://HUEC0
-                Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 64, 256, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                if (Colision) {
-                    vida--;
-                    
-                }
-                else {
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 64, 256, 32, 32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    
-                }
-                break;
-            case 3: //muro horizontal
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 0, 864, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 4: //muro vertical
+            case 1://muro vertical
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 0, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 5://esquina inferior derecha
+            case 2://muro horizontal
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 96, 864, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 6://esquina inferior izquiera
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 64, 864, 32, 32 };
+                rectFuente = { 0, 864, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 7://esquina superior derecha
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 64, 832, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 8://esquina superior izquierda
+            case 4://muro esquina superior izq
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 96, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 9: //llave
+            case 3://muro esquina superior der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 5://muro esquina inferior izq
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 6://muro esquina inferior der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 8://muro final izquierda
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 128, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 7://muro final derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 128, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 9://muro final abajo
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 32, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 10://muro final arriba
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 32, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 11://muro intersección izq, arriba, der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 160, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 12://muro intersección izq, abajo, der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 13://muro intersección izq, arriba, abajo
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 14://muro intersección der, arriba, abajo
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 160, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 15://muro intersección total
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 224, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 16://llave
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 224, 4192, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 17://cofre                                                                       
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
-                    llaveObtenida = true;
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 224, 4192, 32, 32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectPanel = { 732,32,32,32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
-                }
-                else {
-                    if (llaveObtenida == false) {
-                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                        rectFuente = { 224, 4192, 32, 32 };
-                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    }
-                    else
-                    {
-                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                        rectFuente = { 224, 4192, 32, 32 };
-                        rectPanel = { 732,32,32,32 };
-                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
-                    }
-                }
-                break;
-            case 10://tesoro
-                Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                if (Colision && llaveObtenida==true) {
                     cofreAbierto = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 192, 3456, 32, 32 };
+                    rectFuente = { 192, 3424, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 }
                 else {
@@ -181,31 +190,24 @@ int pintarmapa(SDL_Rect personaje) {
                     else
                     {
                         SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                        rectFuente = { 192, 3456, 32, 32 };
+                        rectFuente = { 192, 3424, 32, 32 };
                         SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     }
                 }
                 break;
-            case 11://oso
-                Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                if (Colision) {
-                    mapa[i][j] = 0;
-                    puntos++;
-                }
-                else {
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 96, 4096, 32, 32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-
-                }
+            case 18://calavera
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 4192, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
+
             default:
                 break;
-                return vida;
             }
         }
     }
 }
+
 
 
 void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
