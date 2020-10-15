@@ -100,6 +100,7 @@ void pintarmapa() {
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
             case 8://esquina superior izquierda
+
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 96, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
@@ -159,7 +160,6 @@ int main(int argc, char** argv)
         SDL_Rect srcrect = { sprite * 32, 0, 32, 32 };
         SDL_Rect dstrect = { posx, posy, 32, 32 };
 
-
         while (SDL_PollEvent(&event) != NULL)
         {
             switch (event.type)
@@ -167,9 +167,23 @@ int main(int argc, char** argv)
             case SDL_QUIT:
                 quit = true;
                 break;
+            case SDL_KEYDOWN:
+                if (event.key.keysym.sym == SDLK_UP) {
+                    posy -= 32;
+                }
+                if (event.key.keysym.sym == SDLK_DOWN) {
+                        posy += 32;
+                }
+                if (event.key.keysym.sym == SDLK_LEFT) {
+                    posx -= 32;
+                }
+                if (event.key.keysym.sym == SDLK_RIGHT) {
+                    posx += 32;
+                }
+                break;
             }
         }
-
+        /*
         if (estadoteclado[SDL_SCANCODE_RIGHT]) {
             posx += 1;
         }
@@ -182,6 +196,7 @@ int main(int argc, char** argv)
         if (estadoteclado[SDL_SCANCODE_DOWN]) {
             posy += 1;
         }
+        */
 
         SDL_RenderClear(renderer);
         pintarmapa();
