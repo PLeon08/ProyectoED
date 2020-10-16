@@ -32,7 +32,7 @@ bool llaveObtenida = false;
 
 
 int puntos;
-int vida;
+int vida = 3;
 const char* Texto;
 
 
@@ -50,6 +50,12 @@ const char* Texto;
   9=llave
   10=tesoro
   */
+
+
+
+
+
+
 int mapa[20][20] = {
     {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
     {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
@@ -72,7 +78,7 @@ int mapa[20][20] = {
     {3,3,3,3,3,3,5,0,0,5,1,0,6,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0} };
 
-void pintarmapa(SDL_Rect personaje) {
+int pintarmapa(SDL_Rect personaje) {
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
             rectFuente = { 64, 1152, 32, 32 };//piso
@@ -94,6 +100,7 @@ void pintarmapa(SDL_Rect personaje) {
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 if (Colision) {
                     vida--;
+                    
                 }
                 else {
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
@@ -194,6 +201,7 @@ void pintarmapa(SDL_Rect personaje) {
                 break;
             default:
                 break;
+                return vida;
             }
         }
     }
@@ -209,6 +217,7 @@ void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
     SDL_FreeSurface(Surface);
     SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
 }
+
 
 
 
@@ -247,7 +256,7 @@ int main(int argc, char** argv)
         stringstream TextoTex;////////////////////////////////////
         TextoTex << "Puntos: " << puntos;////////////////////////////////////
       
-
+        
         while (SDL_PollEvent(&event) != NULL)
         {
             switch (event.type)
@@ -275,12 +284,12 @@ int main(int argc, char** argv)
         SDL_RenderClear(renderer);
         pintarmapa(dstrect);
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });////////////////////////////////////
+        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
 
-
+       
 
     }
 

@@ -1,3 +1,4 @@
 ﻿  Source.cpp
-C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(244,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(253,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(208): warning C4715: 'pintarmapa': no todas las rutas de acceso de control devuelven un valor
   MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
