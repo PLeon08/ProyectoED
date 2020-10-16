@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <sstream>
-
+#include <windows.h>
 
 using namespace std;
 
@@ -27,119 +27,155 @@ SDL_Rect rectPanel;
 
 SDL_bool Colision;
 
+
 bool cofreAbierto = false;
 bool llaveObtenida = false;
 
-
+int monedas;
 int puntos;
 int vida = 3;
 const char* Texto;
-
+int cuenta_atras;
 
 /*Fin Declaración*/
 
-/*0=suelo
-  1=suelox2
-  2=hueco
-  3=muro horizontal
-  4=muro vertical
-  5=esquina inferior derecha
-  6=esquina inferior izquierda
-  7=esquina superior derecha
-  8=esquina superior izquierda
-  9=llave
-  10=tesoro
+
+
+
+
+
+
+/*
+  1= muro vertical
+  2= muro horizontal
+  3= muro esquina superior izq
+  4= muro esquina superior der
+  5= muro esquina inferior izq
+  6= muro esquina inferior der
+  7= muro final izquierda
+  8= muro final derecha
+  9= muro final abajo
+  10= muro final arriba
+  11= muro intersección izq, arriba, der
+  12= muro intersección izq, abajo, der
+  13= muro intersección izq, arriba, abajo
+  14= muro intersección der, arriba, abajo
+  15= muro intersección total
+  16= llave
+  17= cofre
+  18= calavera
+
   */
 
-
-
-
-
-
 int mapa[20][20] = {
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,1,1,1,1,0,0,0,2,0,0,0,0,0,0,1,1,0,2,0},
-    {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,2,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-    {1,1,0,0,1,1,1,1,1,1,1,9,1,1,1,1,0,0,0,0},
-    {0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
-    {0,0,0,1,0,0,0,0,2,1,1,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,10},
-    {0,2,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
-    {0,0,0,1,1,1,7,3,3,3,3,3,8,0,0,0,0,0,0,0},
-    {0,0,0,0,2,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
-    {1,1,1,1,1,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,11,0,4,0,0},
-    {3,3,3,3,3,3,5,0,0,5,1,0,6,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0} };
+    {0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,16},
+    {0,10,0,7,2,2,2,11,2,4,0,10,0,14,2,2,8,0,1,0},
+    {0,1,0,0,0,0,0,0,0,5,12,6,0,1,0,0,0,0,1,0},
+    {0,5,2,2,2,2,2,4,0,0,1,0,0,1,0,0,0,0,1,0},
+    {0,0,0,0,0,0,0,5,2,2,6,0,3,6,0,7,4,0,9,0},
+    {0,3,2,2,2,4,0,0,0,0,0,0,1,0,0,0,1,0,0,0},
+    {0,9,0,0,0,5,4,0,7,2,12,2,6,0,10,0,5,2,2,2},
+    {0,0,0,10,0,0,1,0,0,18,1,0,0,0,1,0,0,0,0,0},
+    {2,4,0,5,4,0,5,2,2,2,6,0,3,2,15,2,2,2,2,2},
+    {0,1,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0},
+    {0,1,0,0,5,2,2,2,4,0,3,2,6,0,1,0,7,2,4,0},
+    {0,5,8,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0},
+    {0,0,0,0,7,2,4,0,14,2,6,0,10,0,5,12,2,2,6,0},
+    {2,2,4,0,0,0,1,0,1,0,0,0,1,0,18,1,0,0,0,0},
+    {17,0,9,0,19,0,1,0,1,0,7,2,11,2,2,6,0,7,4,0},
+    {0,0,0,0,10,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0},
+    {2,2,4,0,5,2,6,0,5,2,8,0,7,2,2,2,4,0,1,0},
+    {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,5,2},
+    {0,7,11,2,8,0,7,2,2,12,2,2,2,2,8,0,1,0,0,0},
+    {0,0,19,0,0,0,0,0,18,1,0,0,0,19,0,0,1,0,10,0}};
 
-int pintarmapa(SDL_Rect personaje) {
+
+void pintarmapa(SDL_Rect personaje) {
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
             rectFuente = { 64, 1152, 32, 32 };//piso
             rectDestino = { 32 * j, 32 * i, 32, 32 };
-            rectPanel = { 32 * j, 32 * i, 32, 32 };
             switch (mapa[i][j])
             {
-            case 0://PISO
+            case 0://Suelo
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 1://Pared
-                rectFuente = { 0, 1184, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 2://HUEC0
-                Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 64, 256, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                if (Colision) {
-                    vida--;
-                    
-                }
-                else {
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 64, 256, 32, 32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    
-                }
-                break;
-            case 3: //muro horizontal
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 0, 864, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 4: //muro vertical
+            case 1://muro vertical
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 0, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 5://esquina inferior derecha
+            case 2://muro horizontal
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 96, 864, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 6://esquina inferior izquiera
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 64, 864, 32, 32 };
+                rectFuente = { 0, 864, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 7://esquina superior derecha
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 64, 832, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
-            case 8://esquina superior izquierda
+            case 4://muro esquina superior izq
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 96, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 9: //llave
+            case 3://muro esquina superior der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 5://muro esquina inferior izq
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 6://muro esquina inferior der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 96, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 8://muro final izquierda
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 128, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 7://muro final derecha
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 128, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 9://muro final abajo
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 32, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 10://muro final arriba
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 32, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 11://muro intersección izq, arriba, der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 160, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 12://muro intersección izq, abajo, der
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 13://muro intersección izq, arriba, abajo
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 192, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 14://muro intersección der, arriba, abajo
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 160, 864, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 15://muro intersección total
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 224, 832, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                break;
+            case 16://llave
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
                     llaveObtenida = true;
@@ -164,9 +200,9 @@ int pintarmapa(SDL_Rect personaje) {
                     }
                 }
                 break;
-            case 10://tesoro
+            case 17://cofre                                                                       
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                if (Colision && llaveObtenida==true) {
+                if (Colision && llaveObtenida == true) {
                     cofreAbierto = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 192, 3456, 32, 32 };
@@ -186,37 +222,97 @@ int pintarmapa(SDL_Rect personaje) {
                     }
                 }
                 break;
-            case 11://oso
+            case 18://calavera
+                Colision = SDL_HasIntersection(&personaje, &rectDestino);
+                if (Colision) {
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 192, 4192, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                   // mapa[i][j] = 0;
+                   // Sonido = 2;
+                    vida--;
+                }
+                else {
+
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 192, 4192, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                }
+                break;
+            case 19://recompensa Monedas
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
                     mapa[i][j] = 0;
-                    puntos++;
+                    //Sonido = 3;
+                    monedas +=5;
                 }
                 else {
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 96, 4096, 32, 32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
 
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 64, 3963, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 }
                 break;
+
             default:
                 break;
-                return vida;
             }
         }
     }
 }
 
 
-void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
+
+void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto, int tamano) {
     TTF_Init();
-    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", 15);
+    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", tamano);
     SDL_Color ColorTexto = { 50,50,200,255 };
     SDL_Surface* Surface = TTF_RenderText_Solid(Fuente, Texto, ColorTexto);
     SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
     SDL_FreeSurface(Surface);
     SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
 }
+
+
+
+
+
+/*
+
+void cronometro() {
+    cuenta_atras = 60;
+    stringstream TextoTex;
+    TextoTex << "tiempo: " << cuenta_atras;
+    while (cuenta_atras>0) {
+        MostrarTexto(TextoTex.str().c_str(), { 620, 40, 150, 50 }, 10);
+        cuenta_atras--;
+        if (cuenta_atras == 0) {
+            MostrarTexto("Ha muerto", { 300, 300, 150, 50 }, 25);
+            quit = true;
+        }
+    }
+}
+*/
+
+
+void panel() {
+    stringstream TextoTex;
+    rectFuente = { 64, 3963, 32, 32 };//moneda
+    rectPanel = { 700,160,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+    TextoTex << ": " << monedas;
+    MostrarTexto(TextoTex.str().c_str(), { 732, 160, 32, 32 }, 10);
+    ////////////////////////////////////
+    rectFuente = { 160, 3904, 32, 32 };//CAMBIAR POR CORAZON...ESTO ES UN EJEMPLO
+    rectPanel = { 652,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+    rectPanel = { 700,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+    rectPanel = { 748,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+}
+
+
 
 bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
     int posyMuro;
@@ -225,7 +321,8 @@ bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = columna * 32;
                 posyMuro = (fila * 32) + 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -244,7 +341,8 @@ bool existeColisionAbajo(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = columna * 32;
                 posyMuro = (fila * 32) - 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -263,7 +361,8 @@ bool existeColisionIzquierda(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = (columna * 32) + 32;
                 posyMuro = fila * 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -282,7 +381,8 @@ bool existeColisionDerecha(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = (columna * 32) - 32;
                 posyMuro = fila * 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -304,7 +404,7 @@ void inicializar() {
     IMG_Init(IMG_INIT_PNG);
     estadoteclado = SDL_GetKeyboardState(NULL);
 
-    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 768, 640, 0);
+    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 640, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
     image = IMG_Load("arquera.png");
     texture = SDL_CreateTextureFromSurface(renderer, image);
@@ -326,9 +426,6 @@ int main(int argc, char** argv)
         SDL_Rect srcrect = { sprite * 32, 0, 32, 32 };
         SDL_Rect dstrect = { posx, posy, 32, 32 };
 
-        stringstream TextoTex;////////////////////////////////////
-        TextoTex << "Puntos: " << puntos;////////////////////////////////////
-      
         
         while (SDL_PollEvent(&event) != NULL)
         {
@@ -347,7 +444,7 @@ int main(int argc, char** argv)
                     }
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
-                    if (posy > 608 || existeColisionAbajo(posx, posy)) {
+                    if (posy > 576 || existeColisionAbajo(posx, posy)) {
                         break;
                     }
                     else {
@@ -363,7 +460,7 @@ int main(int argc, char** argv)
                     }
                 }
                 if (event.key.keysym.sym == SDLK_RIGHT) {
-                    if (posx > 608 || existeColisionDerecha(posx, posy)) {
+                    if (posx > 576 || existeColisionDerecha(posx, posy)) {
                         break;
                     }
                     else {
@@ -376,13 +473,11 @@ int main(int argc, char** argv)
 
         SDL_RenderClear(renderer);
         pintarmapa(dstrect);
+        panel();
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
-
-       
 
     }
 

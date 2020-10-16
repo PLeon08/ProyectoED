@@ -6,3 +6,5 @@ C:\Users\Usuario\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovi
 C:\Users\Usuario\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.pdb
 C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
 C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.pdb
+C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.pdb
