@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <SDL.h>
 #include <SDL_image.h>
-//#include <SDL_ttf.h>
+#include <SDL_ttf.h>
 #include <sstream>
 
 
@@ -207,7 +207,7 @@ int pintarmapa(SDL_Rect personaje) {
     }
 }
 
-/*
+
 void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
     TTF_Init();
     TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", 15);
@@ -216,7 +216,7 @@ void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
     SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
     SDL_FreeSurface(Surface);
     SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
-}*/
+}
 
 bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
     int posyMuro;
@@ -377,7 +377,7 @@ int main(int argc, char** argv)
         SDL_RenderClear(renderer);
         pintarmapa(dstrect);
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-        //MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
+        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
