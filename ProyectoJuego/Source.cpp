@@ -1,9 +1,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL.h>
-#include <stdio.h>;
 #include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <sstream>
 
+
+using namespace std;
 
 /*Declaración*/
 const Uint8* estadoteclado;
@@ -20,11 +23,19 @@ SDL_Texture* texturafondo;
 
 SDL_Rect rectFuente;
 SDL_Rect rectDestino;
-
+SDL_Rect rectPanel;
 
 SDL_bool Colision;
 
 bool cofreAbierto = false;
+bool llaveObtenida = false;
+
+
+int puntos;
+int vida;
+const char* Texto;
+
+
 /*Fin Declaración*/
 
 /*0=suelo
@@ -44,7 +55,7 @@ int mapa[20][20] = {
     {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
     {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,1,1,1,1,0,0,0,2,0,0,0,0,0,0,1,1,0,0,0},
+    {0,1,1,1,1,0,0,0,2,0,0,0,0,0,0,1,1,0,2,0},
     {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
     {0,2,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
     {0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
@@ -54,7 +65,7 @@ int mapa[20][20] = {
     {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,10},
     {0,2,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
     {0,0,0,1,1,1,7,3,3,3,3,3,8,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
+    {0,0,0,0,2,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
     {1,1,1,1,1,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,4,0,0,1,1,0,4,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,11,0,4,0,0},
@@ -66,24 +77,29 @@ void pintarmapa(SDL_Rect personaje) {
         for (int j = 0; j < 20; j++) {
             rectFuente = { 64, 1152, 32, 32 };//piso
             rectDestino = { 32 * j, 32 * i, 32, 32 };
+            rectPanel = { 32 * j, 32 * i, 32, 32 };
             switch (mapa[i][j])
             {
             case 0://PISO
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 1://PISO2
-                rectFuente = { 64, 1184, 32, 32 };
+            case 1://Pared
+                rectFuente = { 0, 1184, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
             case 2://HUEC0
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                rectFuente = { 64, 256, 32, 32 };
+                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 if (Colision) {
-                    mapa[i][j] = 0;
+                    vida--;
                 }
                 else {
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 96, 4096, 32, 32 };
+                    rectFuente = { 64, 256, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    
                 }
                 break;
             case 3: //muro horizontal
@@ -119,17 +135,31 @@ void pintarmapa(SDL_Rect personaje) {
             case 9: //llave
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
-                    mapa[i][j] = 0;
-                }
-                else {
+                    llaveObtenida = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 224, 4192, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectPanel = { 732,32,32,32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                }
+                else {
+                    if (llaveObtenida == false) {
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                        rectFuente = { 224, 4192, 32, 32 };
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    }
+                    else
+                    {
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                        rectFuente = { 224, 4192, 32, 32 };
+                        rectPanel = { 732,32,32,32 };
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                    }
                 }
                 break;
             case 10://tesoro
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                if (Colision) {
+                if (Colision && llaveObtenida==true) {
                     cofreAbierto = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 192, 3456, 32, 32 };
@@ -150,17 +180,37 @@ void pintarmapa(SDL_Rect personaje) {
                 }
                 break;
             case 11://oso
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 96, 4096, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                break;
+                Colision = SDL_HasIntersection(&personaje, &rectDestino);
+                if (Colision) {
+                    mapa[i][j] = 0;
+                    puntos++;
+                }
+                else {
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 96, 4096, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
 
+                }
+                break;
             default:
                 break;
             }
         }
     }
 }
+
+
+void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
+    TTF_Init();
+    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", 15);
+    SDL_Color ColorTexto = { 50,50,200,255 };
+    SDL_Surface* Surface = TTF_RenderText_Solid(Fuente, Texto, ColorTexto);
+    SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
+    SDL_FreeSurface(Surface);
+    SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
+}
+
+
 
 void inicializar() {
     quit = false;
@@ -172,14 +222,14 @@ void inicializar() {
     IMG_Init(IMG_INIT_PNG);
     estadoteclado = SDL_GetKeyboardState(NULL);
 
-    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 736, 640, 0);
+    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 768, 640, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
-    image = IMG_Load("Blue_Mage.png");
+    image = IMG_Load("arquera.png");
     texture = SDL_CreateTextureFromSurface(renderer, image);
 
     fondo = IMG_Load("fondos.png");
     texturafondo = SDL_CreateTextureFromSurface(renderer, fondo);
-    //SDL_FreeSurface(fondo);
+    SDL_FreeSurface(fondo);
     SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
 }
 
@@ -194,6 +244,9 @@ int main(int argc, char** argv)
         SDL_Rect srcrect = { sprite * 32, 0, 32, 32 };
         SDL_Rect dstrect = { posx, posy, 32, 32 };
 
+        stringstream TextoTex;////////////////////////////////////
+        TextoTex << "Puntos: " << puntos;////////////////////////////////////
+      
 
         while (SDL_PollEvent(&event) != NULL)
         {
@@ -222,9 +275,11 @@ int main(int argc, char** argv)
         SDL_RenderClear(renderer);
         pintarmapa(dstrect);
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });////////////////////////////////////
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
+
 
 
     }
