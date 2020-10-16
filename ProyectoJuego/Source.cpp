@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
+//#include <SDL_ttf.h>
 #include <sstream>
 
 
@@ -207,7 +207,7 @@ int pintarmapa(SDL_Rect personaje) {
     }
 }
 
-
+/*
 void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
     TTF_Init();
     TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", 15);
@@ -216,10 +216,83 @@ void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
     SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
     SDL_FreeSurface(Surface);
     SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
+}*/
+
+bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
+    int posyMuro;
+    int posxMuro;
+    bool colision;
+    for (int fila = 0; fila < 20; fila++)
+    {
+        for (int columna = 0; columna < 20; columna++) {
+            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+                posxMuro = columna * 32;
+                posyMuro = (fila * 32) + 32;
+                if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
+bool existeColisionAbajo(int posxPersonaje, int posyPersonaje) {
+    int posyMuro;
+    int posxMuro;
+    bool colision;
+    for (int fila = 0; fila < 20; fila++)
+    {
+        for (int columna = 0; columna < 20; columna++) {
+            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+                posxMuro = columna * 32;
+                posyMuro = (fila * 32) - 32;
+                if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
+bool existeColisionIzquierda(int posxPersonaje, int posyPersonaje) {
+    int posyMuro;
+    int posxMuro;
+    bool colision;
+    for (int fila = 0; fila < 20; fila++)
+    {
+        for (int columna = 0; columna < 20; columna++) {
+            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+                posxMuro = (columna * 32) + 32;
+                posyMuro = fila * 32;
+                if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
+bool existeColisionDerecha(int posxPersonaje, int posyPersonaje) {
+    int posyMuro;
+    int posxMuro;
+    bool colision;
+    for (int fila = 0; fila < 20; fila++)
+    {
+        for (int columna = 0; columna < 20; columna++) {
+            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+                posxMuro = (columna * 32) - 32;
+                posyMuro = fila * 32;
+                if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 void inicializar() {
     quit = false;
@@ -266,16 +339,36 @@ int main(int argc, char** argv)
                 break;
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_UP) {
-                    posy -= 32;
+                    if (posy <= 0 || existeColisionArriba(posx, posy)) {
+                        break;
+                    }
+                    else {
+                        posy -= 32;
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
-                    posy += 32;
+                    if (posy > 608 || existeColisionAbajo(posx, posy)) {
+                        break;
+                    }
+                    else {
+                        posy += 32;
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_LEFT) {
-                    posx -= 32;
+                    if (posx <= 0 || existeColisionIzquierda(posx, posy)) {
+                        break;
+                    }
+                    else {
+                        posx -= 32;
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_RIGHT) {
-                    posx += 32;
+                    if (posx > 608 || existeColisionDerecha(posx, posy)) {
+                        break;
+                    }
+                    else {
+                        posx += 32;
+                    }
                 }
                 break;
             }
@@ -284,7 +377,7 @@ int main(int argc, char** argv)
         SDL_RenderClear(renderer);
         pintarmapa(dstrect);
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
+        //MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
