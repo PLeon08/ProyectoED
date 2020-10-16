@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <sstream>
-
+#include <windows.h>
 
 using namespace std;
 
@@ -27,16 +27,23 @@ SDL_Rect rectPanel;
 
 SDL_bool Colision;
 
+
 bool cofreAbierto = false;
 bool llaveObtenida = false;
 
-
+int monedas;
 int puntos;
 int vida = 3;
 const char* Texto;
-
+int cuenta_atras;
 
 /*Fin Declaración*/
+
+
+
+
+
+
 
 /*
   1= muro vertical
@@ -75,12 +82,12 @@ int mapa[20][20] = {
     {0,5,8,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0},
     {0,0,0,0,7,2,4,0,14,2,6,0,10,0,5,12,2,2,6,0},
     {2,2,4,0,0,0,1,0,1,0,0,0,1,0,18,1,0,0,0,0},
-    {17,0,9,0,0,0,1,0,1,0,7,2,11,2,2,6,0,7,4,0},
+    {17,0,9,0,19,0,1,0,1,0,7,2,11,2,2,6,0,7,4,0},
     {0,0,0,0,10,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0},
     {2,2,4,0,5,2,6,0,5,2,8,0,7,2,2,2,4,0,1,0},
     {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,5,2},
     {0,7,11,2,8,0,7,2,2,12,2,2,2,2,8,0,1,0,0,0},
-    {0,0,0,0,0,0,0,0,18,1,0,0,0,0,0,0,1,0,10,0}};
+    {0,0,19,0,0,0,0,0,18,1,0,0,0,19,0,0,1,0,10,0}};
 
 
 void pintarmapa(SDL_Rect personaje) {
@@ -169,16 +176,36 @@ void pintarmapa(SDL_Rect personaje) {
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
             case 16://llave
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 224, 4192, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                Colision = SDL_HasIntersection(&personaje, &rectDestino);
+                if (Colision) {
+                    llaveObtenida = true;
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 224, 4192, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectPanel = { 732,32,32,32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                }
+                else {
+                    if (llaveObtenida == false) {
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                        rectFuente = { 224, 4192, 32, 32 };
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    }
+                    else
+                    {
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                        rectFuente = { 224, 4192, 32, 32 };
+                        rectPanel = { 732,32,32,32 };
+                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                    }
+                }
                 break;
             case 17://cofre                                                                       
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                if (Colision) {
+                if (Colision && llaveObtenida == true) {
                     cofreAbierto = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectFuente = { 192, 3424, 32, 32 };
+                    rectFuente = { 192, 3456, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 }
                 else {
@@ -190,15 +217,41 @@ void pintarmapa(SDL_Rect personaje) {
                     else
                     {
                         SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                        rectFuente = { 192, 3424, 32, 32 };
+                        rectFuente = { 192, 3456, 32, 32 };
                         SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     }
                 }
                 break;
             case 18://calavera
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                rectFuente = { 192, 4192, 32, 32 };
-                SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                Colision = SDL_HasIntersection(&personaje, &rectDestino);
+                if (Colision) {
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 192, 4192, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                   // mapa[i][j] = 0;
+                   // Sonido = 2;
+                    vida--;
+                }
+                else {
+
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 192, 4192, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                }
+                break;
+            case 19://recompensa Monedas
+                Colision = SDL_HasIntersection(&personaje, &rectDestino);
+                if (Colision) {
+                    mapa[i][j] = 0;
+                    //Sonido = 3;
+                    monedas +=5;
+                }
+                else {
+
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                    rectFuente = { 64, 3963, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
+                }
                 break;
 
             default:
@@ -210,15 +263,49 @@ void pintarmapa(SDL_Rect personaje) {
 
 
 
-void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto) {
+void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto, int tamano) {
     TTF_Init();
-    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", 15);
+    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", tamano);
     SDL_Color ColorTexto = { 50,50,200,255 };
     SDL_Surface* Surface = TTF_RenderText_Solid(Fuente, Texto, ColorTexto);
     SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
     SDL_FreeSurface(Surface);
     SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
 }
+
+
+
+
+
+/*
+
+void cronometro() {
+    cuenta_atras = 60;
+    stringstream TextoTex;
+    TextoTex << "tiempo: " << cuenta_atras;
+    while (cuenta_atras>0) {
+        MostrarTexto(TextoTex.str().c_str(), { 620, 40, 150, 50 }, 10);
+        cuenta_atras--;
+        if (cuenta_atras == 0) {
+            MostrarTexto("Ha muerto", { 300, 300, 150, 50 }, 25);
+            quit = true;
+        }
+    }
+}
+*/
+
+
+void panel() {
+    stringstream TextoTex;
+    rectFuente = { 64, 3963, 32, 32 };//moneda
+    rectPanel = { 700,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+    TextoTex << ": " << monedas;
+    MostrarTexto(TextoTex.str().c_str(), { 732, 64, 32, 32 }, 10);
+    ////////////////////////////////////
+}
+
+
 
 bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
     int posyMuro;
@@ -227,7 +314,8 @@ bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = columna * 32;
                 posyMuro = (fila * 32) + 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -246,7 +334,8 @@ bool existeColisionAbajo(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = columna * 32;
                 posyMuro = (fila * 32) - 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -265,7 +354,8 @@ bool existeColisionIzquierda(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = (columna * 32) + 32;
                 posyMuro = fila * 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -284,7 +374,8 @@ bool existeColisionDerecha(int posxPersonaje, int posyPersonaje) {
     for (int fila = 0; fila < 20; fila++)
     {
         for (int columna = 0; columna < 20; columna++) {
-            if (mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8) {
+            if (mapa[fila][columna] == 1 || mapa[fila][columna] == 2 || mapa[fila][columna] == 3 || mapa[fila][columna] == 4 || mapa[fila][columna] == 5 || mapa[fila][columna] == 6 || mapa[fila][columna] == 7 || mapa[fila][columna] == 8
+                || mapa[fila][columna] == 9 || mapa[fila][columna] == 10 || mapa[fila][columna] == 11 || mapa[fila][columna] == 12 || mapa[fila][columna] == 13 || mapa[fila][columna] == 15 || mapa[fila][columna] == 15) {
                 posxMuro = (columna * 32) - 32;
                 posyMuro = fila * 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
@@ -306,7 +397,7 @@ void inicializar() {
     IMG_Init(IMG_INIT_PNG);
     estadoteclado = SDL_GetKeyboardState(NULL);
 
-    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 768, 640, 0);
+    window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 640, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
     image = IMG_Load("arquera.png");
     texture = SDL_CreateTextureFromSurface(renderer, image);
@@ -328,9 +419,6 @@ int main(int argc, char** argv)
         SDL_Rect srcrect = { sprite * 32, 0, 32, 32 };
         SDL_Rect dstrect = { posx, posy, 32, 32 };
 
-        stringstream TextoTex;////////////////////////////////////
-        TextoTex << "Puntos: " << puntos;////////////////////////////////////
-      
         
         while (SDL_PollEvent(&event) != NULL)
         {
@@ -349,7 +437,7 @@ int main(int argc, char** argv)
                     }
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
-                    if (posy > 608 || existeColisionAbajo(posx, posy)) {
+                    if (posy > 576 || existeColisionAbajo(posx, posy)) {
                         break;
                     }
                     else {
@@ -365,7 +453,7 @@ int main(int argc, char** argv)
                     }
                 }
                 if (event.key.keysym.sym == SDLK_RIGHT) {
-                    if (posx > 608 || existeColisionDerecha(posx, posy)) {
+                    if (posx > 576 || existeColisionDerecha(posx, posy)) {
                         break;
                     }
                     else {
@@ -378,13 +466,12 @@ int main(int argc, char** argv)
 
         SDL_RenderClear(renderer);
         pintarmapa(dstrect);
+        panel();
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-        MostrarTexto(TextoTex.str().c_str(), { 620, 20, 150, 50 });
+       
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
-
-       
 
     }
 

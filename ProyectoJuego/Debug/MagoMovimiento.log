@@ -1,7 +1,7 @@
 ﻿  Source.cpp
-C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(226,10): warning C4101: 'colision': variable local sin referencia
-C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(245,10): warning C4101: 'colision': variable local sin referencia
-C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(264,10): warning C4101: 'colision': variable local sin referencia
-C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(283,10): warning C4101: 'colision': variable local sin referencia
-C:\Users\Mariluz\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(328,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
-  MagoMovimiento.vcxproj -> C:\Users\Mariluz\Source\Repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(313,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(333,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(353,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(373,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(419,37): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+  MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
