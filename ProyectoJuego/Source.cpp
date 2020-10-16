@@ -298,11 +298,18 @@ void cronometro() {
 void panel() {
     stringstream TextoTex;
     rectFuente = { 64, 3963, 32, 32 };//moneda
-    rectPanel = { 700,64,32,32 };
+    rectPanel = { 700,160,32,32 };
     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
     TextoTex << ": " << monedas;
-    MostrarTexto(TextoTex.str().c_str(), { 732, 64, 32, 32 }, 10);
+    MostrarTexto(TextoTex.str().c_str(), { 732, 160, 32, 32 }, 10);
     ////////////////////////////////////
+    rectFuente = { 160, 3904, 32, 32 };//CAMBIAR POR CORAZON...ESTO ES UN EJEMPLO
+    rectPanel = { 652,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+    rectPanel = { 700,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+    rectPanel = { 748,64,32,32 };
+    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
 }
 
 
@@ -468,7 +475,6 @@ int main(int argc, char** argv)
         pintarmapa(dstrect);
         panel();
         SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
-       
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
         SDL_RenderClear(renderer);
