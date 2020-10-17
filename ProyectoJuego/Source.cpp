@@ -267,7 +267,7 @@ void pintarmapa(SDL_Rect personaje) {
 
 void MostrarTexto(string Texto, SDL_Rect PosicionTexto, int tamano) {
     TTF_Init();
-    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", tamano);
+    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", tamano);//arreglar
     SDL_Color ColorTexto = { 50,50,200,255 };
     SDL_Color white = { 150,200,200 };
     SDL_Color black = { 0,100,0 };
