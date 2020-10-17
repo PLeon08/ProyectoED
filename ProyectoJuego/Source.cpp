@@ -66,7 +66,7 @@ int cuenta_atras;
   15= muro intersección total
   16= llave
   17= cofre
-  18= calavera
+  18= calavera////
 
   */
 
