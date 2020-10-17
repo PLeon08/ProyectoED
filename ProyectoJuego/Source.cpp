@@ -33,6 +33,16 @@ SDL_Rect rectPanel;
 SDL_bool Colision;
 
 Mix_Chunk* efectocofre;
+Mix_Chunk* chocaEnemigo;
+Mix_Chunk* chocaPared;
+Mix_Chunk* morir;
+Mix_Chunk* aparicion;
+Mix_Chunk* key;
+
+
+
+Mix_Music* soundmonedas;
+
 
 
 bool cofreAbierto = false;
@@ -43,6 +53,8 @@ int puntos;
 int vidas;
 const char* Texto;
 int cuenta_atras;
+int c;
+int i;
 
 /*Fin Declaración*/
 
@@ -245,7 +257,7 @@ void pintarmapa(SDL_Rect personaje) {
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
                     mapa[i][j] = 0;
-                    //Sonido = 3;
+                    Mix_PlayMusic(soundmonedas, 0);
                     monedas +=5;
                 }
                 else {
@@ -271,10 +283,10 @@ void MostrarTexto(string Texto, SDL_Rect PosicionTexto, int tamano) {
     SDL_Color ColorTexto = { 50,50,200,255 };
     SDL_Color white = { 150,200,200 };
     SDL_Color black = { 0,100,0 };
-    SDL_Surface* Surface = TTF_RenderText_Shaded(Fuente, "MO", white, black);
-    SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
-    SDL_FreeSurface(Surface);
-    SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
+    //SDL_Surface* Surface = TTF_RenderText_Shaded(Fuente, "MO", white, black);
+    //SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
+    //SDL_FreeSurface(Surface);
+    //SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
 }
 
 /*
@@ -317,6 +329,7 @@ bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
                 posxMuro = columna * 32;
                 posyMuro = (fila * 32) + 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    Mix_PlayChannel(-1, chocaPared, 0);
                     return true;
                 }
             }
@@ -337,6 +350,7 @@ bool existeColisionAbajo(int posxPersonaje, int posyPersonaje) {
                 posxMuro = columna * 32;
                 posyMuro = (fila * 32) - 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    Mix_PlayChannel(-1, chocaPared, 0);
                     return true;
                 }
             }
@@ -357,6 +371,7 @@ bool existeColisionIzquierda(int posxPersonaje, int posyPersonaje) {
                 posxMuro = (columna * 32) + 32;
                 posyMuro = fila * 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    Mix_PlayChannel(-1, chocaPared, 0);
                     return true;
                 }
             }
@@ -377,6 +392,7 @@ bool existeColisionDerecha(int posxPersonaje, int posyPersonaje) {
                 posxMuro = (columna * 32) - 32;
                 posyMuro = fila * 32;
                 if (posxMuro == posxPersonaje && posyMuro == posyPersonaje) {
+                    Mix_PlayChannel(-1, chocaPared, 0);
                     return true;
                 }
             }
@@ -392,9 +408,14 @@ void inicializar() {
     posxE = 96;
     posyE = 416;
     vidas = 3;
+    
+    
+
+
 
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
+    Mix_Init(MIX_INIT_MP3);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
     /*Comando para reproducir la musica, solo necesita una muscia de fondo*/
@@ -414,7 +435,22 @@ void inicializar() {
     SDL_FreeSurface(fondo);
     SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
 
+    
+    //Mix_Init(MIX_INIT_MP3);
+    //if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) { //Se inicializa la funcion para el audio
+        //fprintf(stderr, "Error no se puede iniciar el sistema", SDL_GetError());
+    //}
+    //Mix_FreeChunk(Sonido);
+    key = Mix_LoadWAV("Key.wav");  //Se atribulle el .wav (El wav se atribulle con Mix_LoadWAV)
     efectocofre = Mix_LoadWAV("Cofre.wav");
+    chocaPared = Mix_LoadWAV("ChocaPared.wav");
+    chocaEnemigo = Mix_LoadWAV("ChocaEnemigo.wav");
+    aparicion = Mix_LoadWAV("Aparicion.wav");
+    morir = Mix_LoadWAV("Morir.wav");
+    soundmonedas = Mix_LoadMUS("Monedas.mp3"); //Se atribulle el .mp3 (El mp3 se atribulle con Mix_LoadMUS) 
+
+
+    Mix_PlayChannel(-1, aparicion, 0);
 }
 
 void leerEvento() {
@@ -510,9 +546,16 @@ void escribirVidas() {
 
 void existecolisionenemigo() {
     if (posx==posxE && posy == posyE) {
+        
         vidas -= 1;
         posx = 608;
         posy = 608;
+        Mix_PlayChannel(-1, chocaEnemigo, 0);
+        if (c < 2) {
+            Mix_PlayChannel(1, aparicion, 0);
+        }
+        c += 1;
+        
     }
 }
 
