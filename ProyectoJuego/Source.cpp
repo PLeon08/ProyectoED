@@ -25,6 +25,8 @@ SDL_Texture* texturafondo;
 
 SDL_Surface* enemigo;
 SDL_Texture* texturaenemigo;
+SDL_Surface* llaveCorazon;
+SDL_Texture* texturaCorazon;
 
 SDL_Rect rectFuente;
 SDL_Rect rectDestino;
@@ -183,8 +185,9 @@ void pintarmapa(SDL_Rect personaje) {
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 224, 4192, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectPanel = { 732,32,32,32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                    rectPanel = { 700,480,32,32 };
+                    rectFuente = { 0, 32, 32, 32 };
+                    SDL_RenderCopy(renderer, texturaCorazon, &rectFuente, &rectPanel);
                 }
                 else {
                     if (llaveObtenida == false) {
@@ -195,9 +198,9 @@ void pintarmapa(SDL_Rect personaje) {
                     else
                     {
                         SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                        rectFuente = { 224, 4192, 32, 32 };
-                        rectPanel = { 732,32,32,32 };
-                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                        rectPanel = { 700,480,32,32 };
+                        rectFuente = { 0, 32, 32, 32 };
+                        SDL_RenderCopy(renderer, texturaCorazon, &rectFuente, &rectPanel);
                     }
                 }
                 break;
@@ -409,6 +412,9 @@ void inicializar() {
     enemigo = IMG_Load("slime.png");
     texturaenemigo = SDL_CreateTextureFromSurface(renderer, enemigo);
 
+    llaveCorazon = IMG_Load("llaveCorazon.png");
+    texturaCorazon = SDL_CreateTextureFromSurface(renderer, llaveCorazon);
+
     fondo = IMG_Load("fondos.png");
     texturafondo = SDL_CreateTextureFromSurface(renderer, fondo);
     SDL_FreeSurface(fondo);
@@ -487,19 +493,19 @@ void pantallaDerrota() {
 }
 
 void escribirVidas() {
-    rectFuente = { 160, 3904, 32, 32 };//CAMBIAR POR CORAZON...ESTO ES UN EJEMPLO
+    rectFuente = { 0, 0, 32, 32 };
 
     if (vidas >= 3) {
         rectPanel = { 748,64,32,32 };
-        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+        SDL_RenderCopy(renderer, texturaCorazon, &rectFuente, &rectPanel);
     }
     if (vidas >= 2) {
         rectPanel = { 700,64,32,32 };
-        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+        SDL_RenderCopy(renderer, texturaCorazon, &rectFuente, &rectPanel);
         }
     if (vidas >= 1) {
         rectPanel = { 652,64,32,32 };
-        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+        SDL_RenderCopy(renderer, texturaCorazon, &rectFuente, &rectPanel);
     }
     else {
         SDL_DestroyWindow(window);
