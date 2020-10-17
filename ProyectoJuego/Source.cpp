@@ -9,7 +9,7 @@
 
 using namespace std;
 
-/*Declaraci髇*/
+/*Declaraci贸n*/
 const Uint8* estadoteclado;
 int posx, posy, posxE, posyE;
 bool quit;
@@ -44,7 +44,7 @@ int vidas;
 const char* Texto;
 int cuenta_atras;
 
-/*Fin Declaraci髇*/
+/*Fin Declaraci贸n*/
 
 /*
   1= muro vertical
@@ -57,11 +57,11 @@ int cuenta_atras;
   8= muro final derecha
   9= muro final abajo
   10= muro final arriba
-  11= muro intersecci髇 izq, arriba, der
-  12= muro intersecci髇 izq, abajo, der
-  13= muro intersecci髇 izq, arriba, abajo
-  14= muro intersecci髇 der, arriba, abajo
-  15= muro intersecci髇 total
+  11= muro intersecci贸n izq, arriba, der
+  12= muro intersecci贸n izq, abajo, der
+  13= muro intersecci贸n izq, arriba, abajo
+  14= muro intersecci贸n der, arriba, abajo
+  15= muro intersecci贸n total
   16= llave
   17= cofre
   18= calavera
@@ -151,27 +151,27 @@ void pintarmapa(SDL_Rect personaje) {
                 rectFuente = { 32, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 11://muro intersecci髇 izq, arriba, der
+            case 11://muro intersecci贸n izq, arriba, der
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 160, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 12://muro intersecci髇 izq, abajo, der
+            case 12://muro intersecci贸n izq, abajo, der
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 192, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 13://muro intersecci髇 izq, arriba, abajo
+            case 13://muro intersecci贸n izq, arriba, abajo
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 192, 864, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 14://muro intersecci髇 der, arriba, abajo
+            case 14://muro intersecci贸n der, arriba, abajo
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 160, 864, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 break;
-            case 15://muro intersecci髇 total
+            case 15://muro intersecci贸n total
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                 rectFuente = { 224, 832, 32, 32 };
                 SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
