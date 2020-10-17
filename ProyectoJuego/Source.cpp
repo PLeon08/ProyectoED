@@ -400,7 +400,7 @@ void inicializar() {
     IMG_Init(IMG_INIT_PNG);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
-    /*Comando para reproducir la musica, solo necesita una muscia de fondo*/
+    /*Comando para reproducir la musica, solo necesita una musica de fondo*/
     //Mix_PlayingMusic(musica, -1);
     estadoteclado = SDL_GetKeyboardState(NULL);
 

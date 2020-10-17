@@ -2,3 +2,5 @@ D:\Desktop\TEC\2° Semestre\Estructuras de Datos\ProyectoJuego\MagoMovimiento\De
 D:\Desktop\TEC\2° Semestre\Estructuras de Datos\ProyectoJuego\MagoMovimiento\Debug\MagoMovimiento.pdb
 C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
 C:\Users\nalle\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.pdb
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.pdb
