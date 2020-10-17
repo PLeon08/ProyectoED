@@ -265,11 +265,13 @@ void pintarmapa(SDL_Rect personaje) {
 
 
 
-void MostrarTexto(const char* Texto, SDL_Rect PosicionTexto, int tamano) {
+void MostrarTexto(string Texto, SDL_Rect PosicionTexto, int tamano) {
     TTF_Init();
     TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", tamano);
     SDL_Color ColorTexto = { 50,50,200,255 };
-    SDL_Surface* Surface = TTF_RenderText_Solid(Fuente, Texto, ColorTexto);
+    SDL_Color white = { 150,200,200 };
+    SDL_Color black = { 0,100,0 };
+    SDL_Surface* Surface = TTF_RenderText_Shaded(Fuente, "MO", white, black);
     SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
     SDL_FreeSurface(Surface);
     SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
