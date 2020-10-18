@@ -32,9 +32,11 @@ Parámetros:  Recibe los parámetros (int posxPersonaje, int posyPersonaje), que
 Función: Verifica si el personaje colisiona con una pared del muro del laberinto al moverse a la izquierda. Permite la correcta movilidad del personaje.    
 Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que son la posición en el eje x y en el eje y del personaje.   
 * Existe colisión derecha:  
-Función: Verifica si el personaje colisiona con una pared del muro del laberinto al moverse a la izquierda. Permite la correcta movilidad del personaje.  
+Función: Verifica si el personaje colisiona con una pared del muro del laberinto al moverse a la derecha. Permite la correcta movilidad del personaje.  
 Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que son la posición en el eje x y en el eje y del personaje.  
-* Tiempo y Sprites: bucle del juego 
+* Tiempo y Sprites:  
+  Función: Se encarga de generar el bucle del juego, llamando los demás métodos que se deben ejecutar hasta que el usuario cierre la aplicación.  
+  Parámetros: No recibe.  
   
   5. Análisis de resultados:	
   
