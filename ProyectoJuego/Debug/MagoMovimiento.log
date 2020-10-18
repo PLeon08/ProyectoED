@@ -1,7 +1,10 @@
 ﻿  Source.cpp
-C:\Users\josuc\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(300,10): warning C4101: 'colision': unreferenced local variable
-C:\Users\josuc\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(321,10): warning C4101: 'colision': unreferenced local variable
-C:\Users\josuc\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(342,10): warning C4101: 'colision': unreferenced local variable
-C:\Users\josuc\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(363,10): warning C4101: 'colision': unreferenced local variable
-C:\Users\josuc\source\repos\PablixLeon\ProyectoED\ProyectoJuego\Source.cpp(546,33): warning C4838: conversion from 'Uint32' to 'int' requires a narrowing conversion
-  MagoMovimiento.vcxproj -> C:\Users\josuc\Source\Repos\PablixLeon\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(294,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(315,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(336,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(357,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(384,47): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(391,51): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(453,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(576,33): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+  MagoMovimiento.vcxproj -> C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe

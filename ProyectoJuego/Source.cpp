@@ -5,6 +5,7 @@
 #include <sstream>
 #include <windows.h>
 #include <SDL_mixer.h>
+#include <time.h>
 
 using namespace std;
 
@@ -42,13 +43,8 @@ Mix_Chunk* aparicion;
 Mix_Chunk* key;
 Mix_Chunk* muertedefinitiva;
 
-
-
 Mix_Music* soundmonedas;
 Mix_Music* calabera;
-
-
-
 
 bool cofreAbierto = false;
 bool llaveObtenida = false;
@@ -98,13 +94,14 @@ int mapa[20][20] = {
     {0,5,8,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0},
     {0,0,0,0,7,2,4,0,14,2,6,0,10,0,5,12,2,2,6,0},
     {2,2,4,0,0,0,1,0,1,0,0,0,1,0,18,1,0,0,0,0},
-    {17,0,9,0,19,0,1,0,1,0,7,2,11,2,2,6,0,7,4,0},
+    {17,0,9,0,0,0,1,0,1,0,7,2,11,2,2,6,0,7,4,0},
     {0,0,0,0,10,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0},
     {2,2,4,0,5,2,6,0,5,2,8,0,7,2,2,2,4,0,1,0},
     {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,5,2},
     {0,7,11,2,8,0,7,2,2,12,2,2,2,2,8,0,1,0,0,0},
-    {0,0,19,0,0,0,0,0,18,1,0,0,0,19,0,0,1,0,10,0}};
+    {0,0,0,0,0,0,0,0,18,1,0,0,0,0,0,0,1,0,10,0}};
 
+int recompensas[20];
 
 void pintarmapa(SDL_Rect personaje) {
     for (int i = 0; i < 20; i++) {
@@ -281,9 +278,6 @@ void pintarmapa(SDL_Rect personaje) {
     }
 }
 
-
-
-
 void panel() {
     rectFuente = { 64, 3963, 32, 32 };//moneda
     rectPanel = { 690,302,32,32 };
@@ -378,6 +372,35 @@ bool existeColisionDerecha(int posxPersonaje, int posyPersonaje) {
     return false;
 }
 
+void monedaRandom(int recompensaactual) {
+
+    int posrandom = int(rand() % 400);
+    int cont = 0;
+    bool salir = false;
+    for (int fila = 0; fila < 20; fila++) {
+        for (int columna = 0; columna < 20; columna++) {
+            if (cont == posrandom && mapa[fila][columna] == 0) {
+                mapa[fila][columna] = 19;
+                recompensas[recompensaactual] == posrandom;
+                salir = true;
+                break;
+            }
+            else {
+                if (cont >= posrandom && mapa[fila][columna] == 0) {
+                    mapa[fila][columna] = 19;
+                    recompensas[recompensaactual] == cont;
+                    salir = true;
+                    break;
+                }
+            }
+            cont++;
+        }
+        if (salir) {
+            break;
+        }
+    }
+}
+
 void inicializar() {
     quit = false;
     posx = 608;
@@ -410,9 +433,8 @@ void inicializar() {
     fondo = IMG_Load("fondos.png");
     texturafondo = SDL_CreateTextureFromSurface(renderer, fondo);
     SDL_FreeSurface(fondo);
-    SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    
     //Mix_Init(MIX_INIT_MP3);
     //if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) { //Se inicializa la funcion para el audio
         //fprintf(stderr, "Error no se puede iniciar el sistema", SDL_GetError());
@@ -428,6 +450,12 @@ void inicializar() {
     soundmonedas = Mix_LoadMUS("Monedas.mp3");
     calabera = Mix_LoadMUS("Calabera.mp3");//Se atribulle el .mp3 (El mp3 se atribulle con Mix_LoadMUS) 
 
+    srand(time(NULL));
+    int recompensaActual = 0;
+    for (int x = 0; x < 20; x++) {
+        monedaRandom(recompensaActual);
+        recompensaActual++;
+    }
 
     Mix_PlayChannel(-1, aparicion, 0);
 }
@@ -479,10 +507,11 @@ void leerEvento() {
 }
 
 void pantallaDerrota() {
-    bool salir = false;
-    ventanaDerrota = SDL_CreateWindow("Derrota", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 640, 0);
-    renderer = SDL_CreateRenderer(ventanaDerrota, -1, 0);
-    while (!salir) {
+
+    rectFuente = {32,0,640,640};
+    rectDestino = {80, 0, 640, 640};
+
+    while (!quit) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         
         while (SDL_PollEvent(&event) != NULL)
@@ -490,12 +519,14 @@ void pantallaDerrota() {
             switch (event.type)
             {
             case SDL_QUIT:
-                salir = true;
+                exit(-1);
                 break;
             }
         }
+        SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectDestino);
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
+        
     }
     SDL_DestroyWindow(ventanaDerrota);
 
@@ -519,7 +550,6 @@ void escribirVidas() {
         SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
     }
     else {
-        SDL_DestroyWindow(window);
         pantallaDerrota();
     }    
     
@@ -555,7 +585,7 @@ void tiempoYSprites() {
     SDL_RenderCopy(renderer, texturapersonaje, &srcrect, &dstrect);
     SDL_RenderCopy(renderer, texturaenemigo, &srcrect, &rectenemigo);
     SDL_RenderPresent(renderer);
-    SDL_SetRenderDrawColor(renderer, 168, 230, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 }
 
