@@ -1,5 +1,5 @@
 # ProyectoED
-  1. PRESENTACIÓN:
+  1. Presentación:
 Proyecto del curso de Estructuras de Datos del Instituto Tecnológico de Costa Rica. Desarrollado por los siguientes estudiantes:
   * Josué Quesada Jiménez. 
      Correo electrónico: *******************
