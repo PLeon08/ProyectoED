@@ -1,5 +1,5 @@
 # ProyectoED
- **1. Presentación:
+ 1. Presentación:
   
 Proyecto del curso de Estructuras de Datos del Instituto Tecnológico de Costa Rica. Desarrollado por los siguientes estudiantes:
   * Josué Quesada Jiménez. 
@@ -11,15 +11,15 @@ Proyecto del curso de Estructuras de Datos del Instituto Tecnológico de Costa R
   * Mariluz Saborío Corea. 
      Correo electrónico: mariluzsabco@gmail.com
 
- **2.Tipo de juego creado:
+ 2.Tipo de juego creado:
   
 Es un juego de 2D de un laberinto estilo medieval en el cual hay 4 personajes a elegir. El objetivo principal del juego es encontrar las llaves necesarias para abrir cada baúl en el tiempo establecido y lograr subir de nivel, además de desplazarse por los caminos correctos del laberinto recogiendo recompensas, sumando puntos, evitando enemigos y las trampas que puedan restar vidas al personaje y devolverlo al inicio del recorrido. Es un juego de dificultad baja de tipo arcade que pretende ofrecer una jugabilidad simple, no obstante, entretenida y envolvente para el jugador.
 
-  **3.Principales estructuras de datos creadas:
+  3.Principales estructuras de datos creadas:
   
-  **4.Principales metódos con su respectiva función y sus parámetros si los requieren:
+  4.Principales metódos con su respectiva función y sus parámetros si los requieren:
   
-  **5.Análisis de resultados:	
+  5.Análisis de resultados:	
   
 * *Objetivo: 
 Crear sus propios personajes en sprites con una animación basica de movimiento en horizontal.
@@ -74,4 +74,4 @@ Crear sus propios personajes en sprites con una animación basica de movimiento 
    *Condición: Completado.
    *Proceso:
    
-  **6.Bibliografía:
+  6.Bibliografía:
