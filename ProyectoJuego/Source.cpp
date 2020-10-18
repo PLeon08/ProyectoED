@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 #include <sstream>
 #include <windows.h>
 #include <SDL_mixer.h>
@@ -26,6 +25,9 @@ SDL_Texture* texturafondo;
 SDL_Surface* enemigo;
 SDL_Texture* texturaenemigo;
 
+SDL_Surface* fondosPanel;
+SDL_Texture* texturafondosPanel;
+
 SDL_Rect rectFuente;
 SDL_Rect rectDestino;
 SDL_Rect rectPanel;
@@ -38,10 +40,13 @@ Mix_Chunk* chocaPared;
 Mix_Chunk* morir;
 Mix_Chunk* aparicion;
 Mix_Chunk* key;
+Mix_Chunk* muertedefinitiva;
 
 
 
 Mix_Music* soundmonedas;
+Mix_Music* calabera;
+
 
 
 
@@ -49,10 +54,8 @@ bool cofreAbierto = false;
 bool llaveObtenida = false;
 
 int monedas;
-int puntos;
+
 int vidas;
-const char* Texto;
-int cuenta_atras;
 int c;
 int i;
 
@@ -191,12 +194,16 @@ void pintarmapa(SDL_Rect personaje) {
             case 16://llave
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
+                    if (llaveObtenida != true) {
+                        Mix_PlayChannel(-1, key, 0);
+                    }
                     llaveObtenida = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 224, 4192, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                    rectPanel = { 732,32,32,32 };
-                    SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                    rectPanel = { 700,480,32,32 };
+                    rectFuente = { 0, 32, 32, 32 };
+                    SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
                 }
                 else {
                     if (llaveObtenida == false) {
@@ -207,10 +214,11 @@ void pintarmapa(SDL_Rect personaje) {
                     else
                     {
                         SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                        rectFuente = { 224, 4192, 32, 32 };
-                        rectPanel = { 732,32,32,32 };
-                        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+                        rectPanel = { 700,480,32,32 };
+                        rectFuente = { 0, 32, 32, 32 };
+                        SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
                     }
+
                 }
                 break;
             case 17://cofre                                                                       
@@ -239,15 +247,13 @@ void pintarmapa(SDL_Rect personaje) {
             case 18://calavera
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
                 if (Colision) {
+                    Mix_PlayMusic(calabera, 0);
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 192, 4192, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
-                   // mapa[i][j] = 0;
-                   // Sonido = 2;
-                    vidas--;
+                    
                 }
                 else {
-
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
                     rectFuente = { 192, 4192, 32, 32 };
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
@@ -258,7 +264,7 @@ void pintarmapa(SDL_Rect personaje) {
                 if (Colision) {
                     mapa[i][j] = 0;
                     Mix_PlayMusic(soundmonedas, 0);
-                    monedas +=5;
+                    monedas += 32;
                 }
                 else {
 
@@ -277,44 +283,15 @@ void pintarmapa(SDL_Rect personaje) {
 
 
 
-void MostrarTexto(string Texto, SDL_Rect PosicionTexto, int tamano) {
-    TTF_Init();
-    TTF_Font* Fuente = TTF_OpenFont("Fuente.ttf", tamano);//arreglar
-    SDL_Color ColorTexto = { 50,50,200,255 };
-    SDL_Color white = { 150,200,200 };
-    SDL_Color black = { 0,100,0 };
-    //SDL_Surface* Surface = TTF_RenderText_Shaded(Fuente, "MO", white, black);
-    //SDL_Texture* Textura = SDL_CreateTextureFromSurface(renderer, Surface);
-    //SDL_FreeSurface(Surface);
-    //SDL_RenderCopy(renderer, Textura, NULL, &PosicionTexto);
-}
-
-/*
-
-void cronometro() {
-    cuenta_atras = 60;
-    stringstream TextoTex;
-    TextoTex << "tiempo: " << cuenta_atras;
-    while (cuenta_atras>0) {
-        MostrarTexto(TextoTex.str().c_str(), { 620, 40, 150, 50 }, 10);
-        cuenta_atras--;
-        if (cuenta_atras == 0) {
-            MostrarTexto("Ha muerto", { 300, 300, 150, 50 }, 25);
-            quit = true;
-        }
-    }
-}
-*/
 
 void panel() {
-    stringstream TextoTex;
     rectFuente = { 64, 3963, 32, 32 };//moneda
-    rectPanel = { 700,160,32,32 };
+    rectPanel = { 690,302,32,32 };
     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
-    TextoTex << ": " << monedas;
-    MostrarTexto(TextoTex.str().c_str(), { 732, 160, 32, 32 }, 10);
-    ////////////////////////////////////
-    
+    rectFuente = { monedas , 640, 32, 32 };//contador moneda
+    rectPanel = { 722,300,32,32 };
+    SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
+
 }
 
 bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
@@ -409,9 +386,6 @@ void inicializar() {
     posyE = 416;
     vidas = 3;
     
-    
-
-
 
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
@@ -430,6 +404,9 @@ void inicializar() {
     enemigo = IMG_Load("slime.png");
     texturaenemigo = SDL_CreateTextureFromSurface(renderer, enemigo);
 
+    fondosPanel = IMG_Load("fondosPanel.png");
+    texturafondosPanel = SDL_CreateTextureFromSurface(renderer, fondosPanel);
+    
     fondo = IMG_Load("fondos.png");
     texturafondo = SDL_CreateTextureFromSurface(renderer, fondo);
     SDL_FreeSurface(fondo);
@@ -447,7 +424,9 @@ void inicializar() {
     chocaEnemigo = Mix_LoadWAV("ChocaEnemigo.wav");
     aparicion = Mix_LoadWAV("Aparicion.wav");
     morir = Mix_LoadWAV("Morir.wav");
-    soundmonedas = Mix_LoadMUS("Monedas.mp3"); //Se atribulle el .mp3 (El mp3 se atribulle con Mix_LoadMUS) 
+    muertedefinitiva = Mix_LoadWAV("MuerteDefinitiva.wav");
+    soundmonedas = Mix_LoadMUS("Monedas.mp3");
+    calabera = Mix_LoadMUS("Calabera.mp3");//Se atribulle el .mp3 (El mp3 se atribulle con Mix_LoadMUS) 
 
 
     Mix_PlayChannel(-1, aparicion, 0);
@@ -519,23 +498,25 @@ void pantallaDerrota() {
         SDL_RenderClear(renderer);
     }
     SDL_DestroyWindow(ventanaDerrota);
+
+    SDL_Delay(3000);
     
 }
 
 void escribirVidas() {
-    rectFuente = { 160, 3904, 32, 32 };//CAMBIAR POR CORAZON...ESTO ES UN EJEMPLO
+    rectFuente = { 0, 0 , 32, 32 };//Imagen del corazon
 
     if (vidas >= 3) {
-        rectPanel = { 748,64,32,32 };
-        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+        rectPanel = { 748,90,32,32 };
+        SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
     }
     if (vidas >= 2) {
-        rectPanel = { 700,64,32,32 };
-        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+        rectPanel = { 700,90,32,32 };
+        SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
         }
     if (vidas >= 1) {
-        rectPanel = { 652,64,32,32 };
-        SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectPanel);
+        rectPanel = { 652,90,32,32 };
+        SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
     }
     else {
         SDL_DestroyWindow(window);
@@ -551,8 +532,8 @@ void existecolisionenemigo() {
         posx = 608;
         posy = 608;
         Mix_PlayChannel(-1, chocaEnemigo, 0);
-        if (c < 2) {
-            Mix_PlayChannel(1, aparicion, 0);
+        if (c == 2) {
+            Mix_PlayChannel(1, muertedefinitiva, 0);
         }
         c += 1;
         
