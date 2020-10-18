@@ -23,13 +23,18 @@ Es un juego de 2D de un laberinto estilo medieval en el cual hay cuatro personaj
 Función: Método que recorre la matriz para pintar cada sprite del mapa en pantalla según la posición que se necesita.  
 Parámetros: Recibe el parámetro (SDL_rect personaje), que es un rectángulo del personaje que se utilizará.  
 * Existe colisión arriba:  
-Función:   
-Parámetros:  
-* Existe colisión abajo:
-* Existe colisión izquierda:
-* Existe colisión derecha:
-
-* Tiempo y Sprites bucle del juego 
+Función: Su función es verificar si el personaje colisiona con una pared del muro del laberinto al subir. Permite la correcta movilidad del personaje.  
+Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que son la posición en el eje x y en el eje y del personaje.  
+* Existe colisión abajo:  
+Función: Su función es verificar si el personaje colisiona con una pared del muro del laberinto al bajar. Permite la correcta movilidad del personaje.  
+Parámetros:  Recibe los parámetros (int posxPersonaje, int posyPersonaje), que son la posición en el eje x y en el eje y del personaje.  
+* Existe colisión izquierda:  
+Función: Verifica si el personaje colisiona con una pared del muro del laberinto al moverse a la izquierda. Permite la correcta movilidad del personaje.    
+Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que son la posición en el eje x y en el eje y del personaje.   
+* Existe colisión derecha:  
+Función: Verifica si el personaje colisiona con una pared del muro del laberinto al moverse a la izquierda. Permite la correcta movilidad del personaje.  
+Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que son la posición en el eje x y en el eje y del personaje.  
+* Tiempo y Sprites: bucle del juego 
   
   5. Análisis de resultados:	
   
