@@ -13,15 +13,23 @@ Proyecto del curso de Estructuras de Datos del Instituto Tecnológico de Costa R
 
  2. Tipo de juego creado:
   
-Es un juego de 2D de un laberinto estilo medieval en el cual hay 4 personajes a elegir. El objetivo principal del juego es encontrar las llaves necesarias para abrir cada baúl en el tiempo establecido y lograr subir de nivel, además de desplazarse por los caminos correctos del laberinto recogiendo recompensas, sumando puntos, evitando enemigos y las trampas que puedan restar vidas al personaje y devolverlo al inicio del recorrido. Es un juego de dificultad baja de tipo arcade que pretende ofrecer una jugabilidad simple, no obstante, entretenida y envolvente para el jugador.
+Es un juego de 2D de un laberinto estilo medieval en el cual hay cuatro personajes a elegir. El objetivo principal del juego es encontrar las llaves necesarias para abrir cada baúl en el tiempo establecido y lograr subir de nivel, además de desplazarse por los caminos correctos del laberinto recogiendo recompensas, sumando puntos, evitando enemigos y las trampas que puedan restar vidas al personaje y devolverlo al inicio del recorrido. Es un juego de dificultad baja de tipo arcade que pretende ofrecer una jugabilidad simple, no obstante, entretenida y envolvente para el jugador.
 
   3. Principales estructuras de datos creadas:
   
   
   4. Principales metódos con su respectiva función y sus parámetros si los requieren:
-* Pintar mapaa
-* Los de colisión 4
-* Tiempo y Sprites bucle del juego
+* Pintar mapa:   
+Función: Método que recorre la matriz para pintar cada sprite del mapa en pantalla según la posición que se necesita.  
+Parámetros: Recibe el parámetro (SDL_rect personaje), que es un rectángulo del personaje que se utilizará.  
+* Existe colisión arriba:  
+Función:   
+Parámetros:  
+* Existe colisión abajo:
+* Existe colisión izquierda:
+* Existe colisión derecha:
+
+* Tiempo y Sprites bucle del juego 
   
   5. Análisis de resultados:	
   
@@ -46,8 +54,8 @@ Es un juego de 2D de un laberinto estilo medieval en el cual hay 4 personajes a 
   Proceso: Se creó un método que recorre la matriz para saber qué sprite del mapa debe pintar.  
    
 * Objetivo: Se debe manejar la lista de las ubicaciones de las recompenzas.  
-  Condición: 
-  Proceso:
+  Condición: Completado.
+  Proceso: 
    
 * Objetivo: Generar sonidos al morir el personaje y al cargar el personaje.  
   Condición: Completado.  
@@ -77,4 +85,3 @@ Es un juego de 2D de un laberinto estilo medieval en el cual hay 4 personajes a 
   Condición: Completado.  
   Proceso: 
    
-  6. Bibliografía:
