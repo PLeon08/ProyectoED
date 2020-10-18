@@ -19,6 +19,9 @@ Es un juego de 2D de un laberinto estilo medieval en el cual hay cuatro personaj
   
   
   4. Principales metódos con su respectiva función y sus parámetros si los requieren:
+* Inicializar:  
+Función: Método que se encarga de cargar las imágenes necesarias, los sonidos, crear la ventana y todos los detalles necesarios para iniciar el juego.  
+Parámetros: No recibe.  
 * Pintar mapa:   
 Función: Método que recorre la matriz para pintar cada sprite del mapa en pantalla según la posición que se necesita.  
 Parámetros: Recibe el parámetro (SDL_rect personaje), que es un rectángulo del personaje que se utilizará.  
@@ -90,5 +93,5 @@ Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que 
    
 * Objetivo: Al morir se emite un sonido.  
   Condición: Completado.  
-  Proceso: 
+  Proceso: En la función de colisión con el enemigo se programó que cuando el personaje pierde sus tres vidas se reproduce el sonido de muerte definitiva.  
    
