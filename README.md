@@ -64,7 +64,7 @@ Es un juego de 2D de un laberinto estilo medieval en el cual hay 4 personajes a 
    Condición: Completado.
    Proceso:
 
-* Objetivo: Cuando una recompensa es alcanzada se emite un sonido.
+* Objetivo: Cuando una recompensa es alcanzada se emite un sonido./n
    Condición: Completado.
    Proceso:
    
