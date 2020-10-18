@@ -23,8 +23,8 @@ Es un juego de 2D de un laberinto estilo medieval en el cual hay 4 personajes a 
   
 * *Objetivo: 
 Crear sus propios personajes en sprites con una animación basica de movimiento en horizontal.
-   *Condición: Completado.
-   *Proceso:
+   ..*Condición: Completado.
+   ..*Proceso:
    
 * *Objetivo: Se debe pintar todo el laberinto, debe permitir movimientos en vertical y horizontal.
    *Condición: Completado.
