@@ -1,1 +1,12 @@
-﻿  MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+﻿  Source.cpp
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(359,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(380,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(401,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(422,10): warning C4101: 'colision': variable local sin referencia
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(449,47): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(456,51): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(479,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(633,33): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(636,36): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+C:\Users\nalle\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(639,41): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
+  MagoMovimiento.vcxproj -> C:\Users\nalle\Source\Repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
