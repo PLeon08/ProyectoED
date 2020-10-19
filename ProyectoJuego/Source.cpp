@@ -33,7 +33,8 @@ SDL_Rect rectDestino;
 SDL_Rect rectPanel;
 
 SDL_bool Colision;
-
+int personajeElegido;
+int personajes[3];
 Mix_Chunk* efectocofre;
 
 
@@ -395,7 +396,8 @@ void inicializar() {
     posxE = 96;
     posyE = 416;
     vidas = 3;
-
+    //int personajes[] = {0,32,64,96 };
+    personajeElegido = (int (rand() % 4))*32;
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
@@ -406,7 +408,7 @@ void inicializar() {
 
     window = SDL_CreateWindow("SDL2 Moving Wizard", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 640, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
-    image = IMG_Load("arquera.png");
+    image = IMG_Load("personajes.png");
     texturapersonaje = SDL_CreateTextureFromSurface(renderer, image);
 
     enemigo = IMG_Load("slime.png");
@@ -525,7 +527,7 @@ void existecolisionenemigo() {
 void tiempoYSprites() {
     Uint32 ticks = SDL_GetTicks();
     Uint32 sprite = (ticks / 100) % 5;
-    SDL_Rect srcrect = { sprite * 32, 0, 32, 32 };
+    SDL_Rect srcrect = { sprite * 32, personajeElegido, 32, 32 };
     SDL_Rect dstrect = { posx, posy, 32, 32 };
     SDL_Rect rectenemigo = { posxE, posyE, 32, 32 };
 
