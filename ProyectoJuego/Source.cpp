@@ -65,9 +65,9 @@ int vidas;
 int c;
 int i;
 
-/*Fin Declaración*/
+/*Fin Declaración
 
-/*
+
   1= muro vertical
   2= muro horizontal
   3= muro esquina superior izq
@@ -111,6 +111,9 @@ int mapa[20][20] = {
     {0,7,11,2,8,0,7,2,2,12,2,2,2,2,8,0,1,0,0,0},
     {0,0,0,0,0,0,0,0,18,1,0,0,0,0,0,0,1,0,10,0}};
 
+
+
+/*Lista con la ubicación de las recompensas*/
 int recompensas[20];
 
 void pantallaVictoria() {
