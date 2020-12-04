@@ -19,7 +19,7 @@ Es un juego de 2D de laberintos estilo medieval, con cuatro personajes a elegir,
 
   4. Principales estructuras de datos creadas:
  
-En nuestro proyecto utilizamos diversas estructuras de datos con el fin de almacenar de manera ordenada una serie de valores. Las principales estructuras usadas fueron:
+En nuestro proyecto utilizamos diversas estructuras de datos con el fin de almacenar de manera ordenada una serie de valores. Las principales estructuras usadas fueron:  
 * Grafos: Son estructuras compuestas por vértices que contienen la información y aristas que los conectan. En el caso de este proyecto se utilizaron para creaar vértices en los lugares del mapa en los que se podía caminar y en esos lugares colocar recompenzas u otros.
 * Matrices: Se utilizaron para crear los mapas con enteros dentro de ellas que representaban cada parte del mapa, para saber dónde podrían haber recompensas y para crear los grafos con la información de dónde podría caminar el personaje y los enemigos (se tomaban en cuenta las posiciones de la matriz con un entero específico).
 * Vectores: Se utilizaron vectores para establecer la cantidad de recompensas en el mapa.
@@ -48,6 +48,24 @@ Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que 
 * Tiempo y Sprites:  
 Función: Se encarga de generar el bucle del juego, llamando los demás métodos que se deben ejecutar hasta que el usuario cierre la aplicación.  
 Parámetros: No recibe.  
+* Se puede caminar en:  
+Función: Verifica que la posición X y Y en la matriz sea suelo u objetos sobre los cuales el personaje pueda caminar (no muros).  
+Parámetros: Recibe la matriz del mapa, la posición en X y la posición Y.  
+* Llenar Grafo:  
+Función: Llama a las funciones de llenar vertices y llenar aristas para crear el grafo.  
+Parámetros: Recibe la matriz del juego.  
+* Llenar Aristas:  
+Función: Recorre la matriz valor por valor y si en esa posición la función de "se puede caminar" retorna verdadero, se verifica si se puede crear una arista hacia arriba, abajo, izquierda o derecha con la misma función.  
+Parámetros: recibe la matriz del juego.  
+* Llenar Vértices:  
+Función: Recorre la matriz valor por valor y si en esa posición la función de que "se puede caminar" retorna verdadero se crea un vértice en esa posición y se agrega al total de vértices en el grafo.  
+Parámetros: Recibe la matriz del juego.  
+* Generar recompensa aleatoria:  
+Función: Genera un número aleatorio entre 0 y la cantidad total de vértices, se busca ese número de vértice en el grafo y en él se agrega una recompensa oculta.  
+Parámetros: No recibe.  
+* Recompensa oculta obtenida:  
+Función: Se ejecuta en el ciclo que lee los eventos que se están ejecutando y verifica si el personaje pasa por el vértice que contenía la recompensa oculta aleatoria.  
+Parámetros: No recibe.
   
   6. Análisis de resultados:	
   
