@@ -2,21 +2,23 @@
  1. Presentación:
   
 Proyecto del curso de Estructuras de Datos del Instituto Tecnológico de Costa Rica. Desarrollado por los siguientes estudiantes:
-  * Josué Quesada Jiménez. 
-     Correo electrónico: josucho.45@gmail.com
   * Pablo León Rodríguez. 
      Correo electrónico: pjleon.tec@gmail.com
   * Nallely González Zamora. 
      Correo electrónico: nallegonzs16@gmail.com
+  * Josué Quesada Jiménez. 
+     Correo electrónico: josucho.45@gmail.com
   * Mariluz Saborío Corea. 
      Correo electrónico: mariluzsabco@gmail.com
 
- 2. Tipo de juego creado:
-  
-Es un juego de 2D de un laberinto estilo medieval en el cual hay cuatro personajes a elegir. El objetivo principal del juego es encontrar las llaves necesarias para abrir cada baúl en el tiempo establecido y lograr subir de nivel, además de desplazarse por los caminos correctos del laberinto recogiendo recompensas, sumando puntos, evitando enemigos y las trampas que puedan restar vidas al personaje y devolverlo al inicio del recorrido. Es un juego de dificultad baja de tipo arcade que pretende ofrecer una jugabilidad simple, no obstante, entretenida y envolvente para el jugador.
+ 2. Tipo de juego creado: 
+Es un juego de 2D de laberintos estilo medieval, con cuatro personajes a elegir, los cuales son: una arquera, un mago, un hada sanadora y un bandido. El objetivo principal del juego es encontrar la llave necesaria para abrir el baúl en el tiempo establecido y lograr ganar ese nivel, además de desplazarse por los caminos correctos del laberinto recogiendo recompensas, sumando puntos, intentando encontrar las recompensas ocultas y evitando que los enemigos lo maten restando vidas al personaje y devolviéndolo al inicio del recorrido. Es un juego de dificultad baja de tipo arcade que pretende ofrecer una jugabilidad simple, no obstante, entretenida y envolvente para el jugador.
 
   3. Principales estructuras de datos creadas:
-  
+En nuestro proyecto utilizamos diversas estructuras de datos con el fin de almacenar de manera ordenada una serie de valores. Las principales estructuras usadas fueron:
+* Matrices: Se utilizaron para crear los mapas con enteros dentro de ellas que representaban cada parte del mapa, para saber dónde podrían haber recompensas y para crear los grafos con la información de dónde podría caminar el personaje y los enemigos (se tomaban en cuenta las posiciones de la matriz con un entero específico).
+* Vectores: Se utilizaron vectores para establecer la cantidad de recompensas en el mapa.
+* Switch: Se utilizaron para definir qué rectángulo de imagen se pintaría en el mapa, ya que en un "switch" se pueden definir diferentes casos, en esta situación de acuerdo a los posibles números enteros que se encontraban en la matriz.
   
   4. Principales metódos con su respectiva función y sus parámetros si los requieren:
 * Inicializar:  
@@ -94,4 +96,6 @@ Parámetros: Recibe los parámetros (int posxPersonaje, int posyPersonaje), que 
 * Objetivo: Al morir se emite un sonido.  
   Condición: Completado.  
   Proceso: En la función de colisión con el enemigo se programó que cuando el personaje pierde sus tres vidas se reproduce el sonido de muerte definitiva.  
+  
+*Objetivo:
    
