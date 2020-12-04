@@ -121,5 +121,29 @@ Parámetros: No recibe.
   Condición: Completado.  
   Proceso: En la función de colisión con el enemigo se programó que cuando el personaje pierde sus tres vidas se reproduce el sonido de muerte definitiva.  
   
-*Objetivo:
+-------------------OBJETIVOS DE LA SEGUNDA FASE--------------------   
+* Objetivo: Establecer la mobilidad de los enemigos.  
+Condición: Completado.  
+Proceso: Se establecieron las posiciones para que en cada mapa el enemigo se movilizara en las partes por las que el jugador debería pasar.  
+
+* Objetivo: Mediante un árbol de busqueda establecer la ruta más corta para alcanzar al jugador.  
+Condición: Incompleto.  
+Razón: Se creó el árbol (grafo) pero no se creó el algortimo para buscar el personaje.  
+
+* Objetivo: Crear tres niveles más del juego con mapas diferentes.  
+Condición: Completado.  
+Proceso: Se crearon 3 mapas nuevos y se implementaron igual que el primero. 
+
+* Objetivo: Visualizar una recompensa oculta, mediante un grafo si el jugador toma una ruta a un destino definido.
+Condición: Completado.  
+Proceso: Se creó un algoritmo que genera un grafo para cada mapa, posteriormente se crearon los métodos que posicionen una recompensa oculta aleatoriamente para cada partida. Si el jugador pasa sobre la recompensa se mostrará en el panel de recompensas obtenidas.  
+
+* Objetivo: Muestre el marcador de vidas y recopensas que tiene el jugador.  
+Condición: Completado.
+Proceso: En un panel a la derecha de la pantalla se muestran las vidas, recompensas ocultas y recompensas visibles (monedas y llave). Se crearon condiciones de colisión con los objetos definidos en la matriz para que si el jugador se posiciona en donde están las recompensas se muestren en el panel, y si toca a un enemigo se devuelve al inicio del laberinto, pierde la llave y una vida.  
+
+* Objetivo: Permita seleccionar el jugador antes de iniciar la partida.  
+Condición: Completado.  
+Proceso: Se diseñó una pantalla de inicio en la que se puede escoger cualquiera de los cuatro personajes capturando el click del mouse, y de la misma forma se puede escoger el mapa (laberinto) en el cual se desea jugar.  
+
    
