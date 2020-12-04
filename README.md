@@ -90,8 +90,8 @@ Parámetros: No recibe.
   Proceso: Se creó un método que recorre la matriz para saber qué sprite del mapa debe pintar.  
    
 * Objetivo: Se debe manejar la lista de las ubicaciones de las recompenzas.  
-  Condición: Completado.
-  Proceso: 
+  Condición: Completado.  
+  Proceso: Se declaró un vector con la cantidad de recompenzas deseadas para cada mapa y se creó un método para que generara las recompenzas en lugares aleatorios del mapa (habilitados para que el jugador camine).  
    
 * Objetivo: Generar sonidos al morir el personaje y al cargar el personaje.  
   Condición: Completado.  
