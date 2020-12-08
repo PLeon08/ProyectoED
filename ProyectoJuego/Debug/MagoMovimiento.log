@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Source.cpp
 C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(411,42): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
 C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(414,39): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
@@ -16,3 +17,6 @@ C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(1247,3
 C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(1250,41): warning C4838: la conversión de 'Uint32' en 'int' requiere una conversión de restricción
 C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Source.cpp(214): warning C4715: 'Grafo::agregarArista': no todas las rutas de acceso de control devuelven un valor
   MagoMovimiento.vcxproj -> C:\Users\Usuario\source\repos\PLeon08\ProyectoED\ProyectoJuego\Debug\MagoMovimiento.exe
+=======
+﻿
+>>>>>>> 5ab5da507073773e47527abc031432be52f7ae69

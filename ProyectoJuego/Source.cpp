@@ -78,6 +78,7 @@ int vidas;
 int c;
 int i;
 
+<<<<<<< HEAD
 //relacionado con el grafo
 struct Vertice;
 struct Arista;
@@ -249,6 +250,11 @@ struct Grafo {
 };
 
 /*
+=======
+/*Fin Declaración
+
+
+>>>>>>> 5ab5da507073773e47527abc031432be52f7ae69
   1= muro vertical
   2= muro horizontal
   3= muro esquina superior izq
@@ -362,6 +368,9 @@ int town[20][20] = {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+/*Lista con la ubicación de las recompensas*/
 int recompensas[20];
 
 //Declaración de todos los métodos
