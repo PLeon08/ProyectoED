@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <SDL_mixer.h>
 #include <time.h>
+#include <ctime>
 #include <iostream>
 
 using namespace std;
@@ -14,6 +15,7 @@ using namespace std;
 const Uint8* estadoteclado;
 int posx, posy, posxSlime, posySlime, posxDemon, posyDemon;
 int posxAnterior, posyAnterior;
+bool vueltaDemon, vueltaSlime;
 bool quit;
 SDL_Event event;
 SDL_Window* window;
@@ -72,13 +74,15 @@ bool llaveObtenida = false;
 
 int tipopersonaje;
 
+unsigned tiempo;
+
 int monedas;
 
 int vidas;
 int c;
 int i;
 
-<<<<<<< HEAD
+
 //relacionado con el grafo
 struct Vertice;
 struct Arista;
@@ -102,7 +106,7 @@ struct Vertice {
 
 struct Arista {
     bool recompensa = false;
-    bool activa=false;
+    bool activa = false;
     Arista* siguiente = nullptr;
     Arista* anterior = nullptr;
     Vertice* verOrigen = nullptr;
@@ -152,10 +156,10 @@ struct Grafo {
             cabeza = nuevoVer;
             return true;
         }
-        else{
+        else {
             Vertice* vertaux = cabeza;
-            while (vertaux!=nullptr) {
-                if (vertaux->valor==valor) {
+            while (vertaux != nullptr) {
+                if (vertaux->valor == valor) {
                     return false;
                 }
                 vertaux = vertaux->siguiente;
@@ -175,22 +179,22 @@ struct Grafo {
 
     //Falta terminar
     bool agregarArista(int origen, int destino) {
-        
-        if (buscarVertice(origen) == nullptr){
+
+        if (buscarVertice(origen) == nullptr) {
             if (buscarVertice(destino) == nullptr) {
                 if (buscarArista(origen, destino) != nullptr) {
-                return false;
+                    return false;
                 }
-            
+
             }
-                
+
         }
         else {
             Vertice* aux = cabeza;
             Vertice* verOrigen = nullptr;
             Vertice* verDestino = nullptr;
-            while (aux!=nullptr) {
-                if (aux->valor==origen) {
+            while (aux != nullptr) {
+                if (aux->valor == origen) {
                     verOrigen = aux;
                 }
                 if (aux->valor == destino) {
@@ -204,7 +208,7 @@ struct Grafo {
                     nuevacabeza->verDestino = verDestino;
                     verOrigen->cabezaArista = nuevacabeza;
                     verOrigen->cabezaArista->siguiente = aristaaux;
-                    if (aristaaux!=nullptr) {
+                    if (aristaaux != nullptr) {
                         aristaaux->anterior = verOrigen->cabezaArista;
                     }
                     return true;
@@ -227,8 +231,8 @@ struct Grafo {
 
     Arista* buscarArista(int origen, int destino) {
         Vertice* aux = cabeza;
-        
-        while (aux!=nullptr) {
+
+        while (aux != nullptr) {
             if (aux->valor == origen) {
                 if (aux->cabezaArista != nullptr) {
                     Arista* auxarista = aux->cabezaArista;
@@ -277,7 +281,6 @@ struct Grafo {
   */
 int mapa[20][20];
 
-//////////////////////////////////////////////////////////////////////////////////////////////
 int dungeon[20][20] = {
     {0,0,0,0,0,18,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,10,0,7,2,2,6,0,7,4,0,0,0,3,2,2,8,0,10,0},
@@ -366,10 +369,6 @@ int town[20][20] = {
     {0,1,0,5,2,8,0,7,11,2,2,2,8,0,7,2,6,0,1,0},
     {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0} };
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 /*Lista con la ubicación de las recompensas*/
 int recompensas[20];
 
@@ -394,8 +393,6 @@ void existecolisionenemigo();
 void movimientoenemigo();
 void tiempoYSprites();
 void finalizar();
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ventanaPersonaje() {
 
@@ -488,7 +485,6 @@ void ventanaPersonaje() {
 void ventanaMapas() {
     rectFuente = { 0,0,800,640 };
 
-
     while (!quit) {
 
         while (SDL_PollEvent(&event) != NULL)
@@ -501,11 +497,9 @@ void ventanaMapas() {
             }
         }
 
-
         SDL_RenderCopy(renderer, texturaMenuMapa, &rectFuente, &rectFuente);
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
-
 
         if (event.button.button == SDL_BUTTON_LEFT)
         {
@@ -523,6 +517,10 @@ void ventanaMapas() {
                         mapa[y][x] = garden[y][x];
                     }
                 }
+                posySlime = 4 * 32;
+                posxSlime = 0 * 32;
+                posyDemon = 12 * 32;
+                posxDemon = 32 * 19;
                 break;
             }
 
@@ -535,6 +533,10 @@ void ventanaMapas() {
                         mapa[y][x] = dungeon[y][x];
                     }
                 }
+                posySlime = 2 * 32;
+                posxSlime = 3 * 32;
+                posyDemon = 17 * 32;
+                posxDemon = 6 * 19;
                 break;
             }
 
@@ -544,13 +546,17 @@ void ventanaMapas() {
                 mapaElegido = "town";
                 for (int y = 0; y < 20; y++) {
                     for (int x = 0; x < 20; x++) {
-                        mapa[y][x] = desert[y][x];
+                        mapa[y][x] = town[y][x];
                     }
                 }
+                posySlime = 0;
+                posxSlime = 9 * 32;
+                posyDemon = 12 * 32;
+                posxDemon = 0;
                 break;
             }
             //desert
-            if ((x > 472) && (x < 665) && (y > 400) && (y < 550))
+            else if ((x > 472) && (x < 665) && (y > 400) && (y < 550))
             {
                 mapaElegido = "desert";
                 for (int y = 0; y < 20; y++) {
@@ -558,6 +564,10 @@ void ventanaMapas() {
                         mapa[y][x] = desert[y][x];
                     }
                 }
+                posySlime = 0;
+                posxSlime = 0;
+                posyDemon = 15 * 32;
+                posxDemon = 0;
                 break;
 
             }
@@ -565,11 +575,9 @@ void ventanaMapas() {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool llenarGrafo(int matriz[20][20]) {
     if (llenarVertices(matriz) && llenarAristas(matriz)) {
-            return true;
+        return true;
     }
     else {
         return false;
@@ -580,24 +588,23 @@ bool llenarVertices(int matriz[20][20]) {
     int cont = 0;
     for (int posy = 19; posy >= 0; posy--) {
         for (int posx = 19; posx >= 0; posx--) {
-            if (sePuedeCaminarEn(matriz,posy,posx)) {
-                grafito->agregarVertice(cont, matriz[posy][posx], posy, posx); 
+            if (sePuedeCaminarEn(matriz, posy, posx)) {
+                grafito->agregarVertice(cont, matriz[posy][posx], posy, posx);
                 cont++;
             }
-            
+
         }
     }
     totalVertices = cont;
     return true;
 }
 
-// en desarrollo
 bool llenarAristas(int matriz[20][20]) {
     int cont = 0;
     //Dos for para recorrer la matriz valor por valor
     for (int posy = 19; posy >= 0; posy--) {
         for (int posx = 19; posx >= 0; posx--) {
-            if (sePuedeCaminarEn(matriz,posy, posx)) {
+            if (sePuedeCaminarEn(matriz, posy, posx)) {
                 if (posy > 0) {
                     if (sePuedeCaminarEn(matriz, posy - 1, posx)) {
                         grafito->agregarArista(cont, cont - 20);
@@ -620,7 +627,7 @@ bool llenarAristas(int matriz[20][20]) {
                 }
                 cont++;
             }
-            
+
         }
     }
     return true;
@@ -637,11 +644,11 @@ bool sePuedeCaminarEn(int matriz[20][20], int posy, int posx) {
 
 void pantallaVictoria() {
 
-    rectFuente = {0,0,640,640 };
+    rectFuente = { 0,0,640,640 };
     rectDestino = { 80, 0, 640, 640 };
 
     while (!quit) {
-        
+
 
         while (SDL_PollEvent(&event) != NULL)
         {
@@ -823,7 +830,7 @@ void pintarmapa(SDL_Rect personaje) {
                 break;
             case 17://cofre                                                                       
                 Colision = SDL_HasIntersection(&personaje, &rectDestino);
-                if (Colision && llaveObtenida == true && cofreAbierto==false) {
+                if (Colision && llaveObtenida == true && cofreAbierto == false) {
                     Mix_PlayChannel(-1, efectocofre, 0);
                     cofreAbierto = true;
                     SDL_RenderCopy(renderer, texturafondo, &rectFuente, &rectDestino);
@@ -888,14 +895,14 @@ void panel() {
     rectFuente = { monedas , 640, 32, 32 };//contador moneda
     rectPanel = { 722,300,32,32 };
     SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
-  
+
     if (recompensaOculta) {
         rectFuente = { 0 , 64, 32, 32 };//contador moneda
         rectPanel = { 704,422,32,32 };
         SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
     }
-    
-   
+
+
 }
 
 bool existeColisionArriba(int posxPersonaje, int posyPersonaje) {
@@ -1015,8 +1022,8 @@ void generarRecompensaSecretaAleatoria() {
     Vertice* vertaux = grafito->cabeza;
     Arista* arisaux;
     srand(time(NULL));
-    RecompensaAristaAleatoria = rand()%totalVertices;
-    cout << "Numero aleatorio: " << RecompensaAristaAleatoria << endl;
+    RecompensaAristaAleatoria = rand() % totalVertices - 1;
+    cout << RecompensaAristaAleatoria;
     while (vertaux != nullptr) {
         if (vertaux->valor == RecompensaAristaAleatoria) {
             vertaux->cabezaArista->recompensa = true;
@@ -1024,7 +1031,7 @@ void generarRecompensaSecretaAleatoria() {
         }
         vertaux = vertaux->siguiente;
     }
-    
+
 }
 
 //Se termina despues de la aleatoria
@@ -1035,7 +1042,7 @@ void recompensaOcultaObtenida() {
     while (vertaux != nullptr) {
         if ((vertaux->posicionX * 32 == posyAnterior) && (vertaux->posicionY * 32 == posxAnterior)) {
             arisaux = vertaux->cabezaArista;
-            while(arisaux!=nullptr){
+            while (arisaux != nullptr) {
                 if ((arisaux->verDestino->posicionX * 32 == posy) && (arisaux->verDestino->posicionY * 32 == posx) && arisaux->recompensa == true) {
                     recompensaOculta = true;
                 }
@@ -1044,7 +1051,7 @@ void recompensaOcultaObtenida() {
         }
         vertaux = vertaux->siguiente;
     }
-    
+
 }
 
 void inicializar() {
@@ -1057,8 +1064,11 @@ void inicializar() {
     posySlime = 0;
     posxDemon = 192;
     posyDemon = 608;
+    vueltaDemon = true;
+    vueltaSlime = true;
     vidas = 3;
     llaveObtenida = false;
+    grafito = new Grafo;
 
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
@@ -1082,7 +1092,7 @@ void inicializar() {
 
     fondosPanel = IMG_Load("fondosPanel.png");
     texturafondosPanel = SDL_CreateTextureFromSurface(renderer, fondosPanel);
-    
+
     fondoVictoria = IMG_Load("fondosVictoria.png");
     texturaFondoVictoria = SDL_CreateTextureFromSurface(renderer, fondoVictoria);
     SDL_FreeSurface(fondoVictoria);
@@ -1126,23 +1136,8 @@ void inicializar() {
         recompensaActual++;
     }
     llenarGrafo(mapa);
-    Vertice* auxver = grafito->cabeza;
-    while (auxver != nullptr) {
-        cout << "Valor: " << auxver->valor << endl;
-        cout << "X: " << auxver->posicionX << endl;
-        cout << "Y: " << auxver->posicionY << endl;
-        if (auxver->cabezaArista != nullptr) {
-            Arista* auxarista = auxver->cabezaArista;
-            while (auxarista != nullptr) {
-                cout << "Origen: " << auxarista->verOrigen->valor << endl;
-                cout << "Destino: " << auxarista->verDestino->valor << endl;
-                auxarista = auxarista->siguiente;
-            }
-        }
-        cout << endl;
-        auxver = auxver->siguiente;
-    }
     generarRecompensaSecretaAleatoria();
+    tiempo = clock();
 }
 
 void leerEvento() {
@@ -1213,20 +1208,20 @@ void escribirVidas() {
     if (vidas >= 2) {
         rectPanel = { 700,90,32,32 };
         SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
-        }
+    }
     if (vidas >= 1) {
         rectPanel = { 652,90,32,32 };
         SDL_RenderCopy(renderer, texturafondosPanel, &rectFuente, &rectPanel);
     }
     else {
         pantallaDerrota();
-    }    
-    
+    }
+
 }
 
 void existecolisionenemigo() {
-    if ((posx==posxSlime && posy == posySlime) || (posx == posxDemon && posy == posyDemon)) {
-        
+    if ((posx == posxSlime && posy == posySlime) || (posx == posxDemon && posy == posyDemon)) {
+
         vidas -= 1;
         posx = 608;
         posy = 608;
@@ -1237,16 +1232,163 @@ void existecolisionenemigo() {
         c += 1;
 
         llaveObtenida = false;
-        
+
     }
 }
 
 void movimientoenemigo() {
-    
+    Uint32 ticks = SDL_GetTicks();
+
+    if (ticks % 500 <= 0) {
+        if (mapaElegido == "town") {
+            if (vueltaDemon) {
+                if (posyDemon < 608) {
+                    posyDemon += 32;
+                }
+                else {
+                    vueltaDemon = false;
+                }
+            }
+            else {
+                if (posyDemon > 384) {
+                    posyDemon -= 32;
+                }
+                else {
+                    vueltaDemon = true;
+                }
+            }
+
+            if (vueltaSlime) {
+                if (posxSlime < 608) {
+                    posxSlime += 32;
+                }
+                else {
+                    vueltaSlime = false;
+                }
+            }
+            else {
+                if (posxSlime > 192) {
+                    posxSlime -= 32;
+                }
+                else {
+                    vueltaSlime = true;
+                }
+            }
+        }
+
+        else if (mapaElegido == "garden") {
+            if (vueltaDemon) {
+                if (posxDemon > 0) {
+                    posxDemon -= 32;
+                }
+                else {
+                    vueltaDemon = false;
+                }
+            }
+            else {
+                if (posxDemon < 608) {
+                    posxDemon += 32;
+                }
+                else {
+                    vueltaDemon = true;
+                }
+            }
+
+            if (vueltaSlime) {
+                if (posxSlime < 608) {
+                    posxSlime += 32;
+                }
+                else {
+                    vueltaSlime = false;
+                }
+            }
+            else {
+                if (posxSlime > 0) {
+                    posxSlime -= 32;
+                }
+                else {
+                    vueltaSlime = true;
+                }
+            }
+        }
+
+        else if (mapaElegido == "dungeon") {
+            if (vueltaDemon) {
+                if (posxDemon > 96) {
+                    posxDemon -= 32;
+                }
+                else {
+                    vueltaDemon = false;
+                }
+            }
+            else {
+                if (posxDemon < 448) {
+                    posxDemon += 32;
+                }
+                else {
+                    vueltaDemon = true;
+                }
+            }
+
+            if (vueltaSlime) {
+                if (posxSlime < 256) {
+                    posxSlime += 32;
+                }
+                else {
+                    vueltaSlime = false;
+                }
+            }
+            else {
+                if (posxSlime > 64) {
+                    posxSlime -= 32;
+                }
+                else {
+                    vueltaSlime = true;
+                }
+            }
+        }
+
+        else if (mapaElegido == "desert") {
+            if (vueltaDemon) {
+                if (posyDemon < 608) {
+                    posyDemon += 32;
+                }
+                else {
+                    vueltaDemon = false;
+                }
+            }
+            else {
+                if (posyDemon > 384) {
+                    posyDemon -= 32;
+                }
+                else {
+                    vueltaDemon = true;
+                }
+            }
+
+            if (vueltaSlime) {
+                if (posxSlime < 608) {
+                    posxSlime += 32;
+                }
+                else {
+                    vueltaSlime = false;
+                }
+            }
+            else {
+                if (posxSlime > 0) {
+                    posxSlime -= 32;
+                }
+                else {
+                    vueltaSlime = true;
+                }
+            }
+        }
+    }
+
 }
 
 void tiempoYSprites() {
-    
+
     Uint32 ticks = SDL_GetTicks();
     Uint32 sprite = (ticks / 100) % 5;
     Uint32 tiempoDemon = (ticks / 100) % 7;
@@ -1264,9 +1406,9 @@ void tiempoYSprites() {
     panel();
     escribirVidas();
     existecolisionenemigo();
-    //movimientoenemigo();
+    movimientoenemigo();
     SDL_RenderCopy(renderer, texturapersonaje, &srcrect, &dstrect);
-    
+
     SDL_RenderCopy(renderer, texturaSlime, &rectFSlime, &rectDSlime);
     SDL_RenderCopy(renderer, texturaDemon, &rectFDemon, &rectDDemon);
     SDL_RenderPresent(renderer);
@@ -1286,75 +1428,6 @@ void finalizar() {
 
 int main(int argc, char** argv)
 {
-    grafito = new Grafo;
-    /*
-    grafito->agregarVertice(1);
-    grafito->agregarVertice(2);
-    grafito->agregarVertice(3);
-    grafito->agregarVertice(4);
-
-    Vertice* auxver = grafito->cabeza;
-    while (auxver != nullptr) {
-        cout << "Valor: "<<auxver->valor<<endl;
-        auxver = auxver->siguiente;
-    }
-    cout << endl;
-    grafito->agregarArista(1, 2);
-    grafito->agregarArista(1, 2);
-    grafito->agregarArista(2, 3);
-    grafito->agregarArista(3, 4);
-    grafito->agregarArista(4, 2);
-    auxver = grafito->cabeza;
-    while (auxver != nullptr) {
-        cout << "Valor: " << auxver->valor << endl;
-        if (auxver->cabezaArista != nullptr) {
-            Arista* auxarista = auxver->cabezaArista;
-            while (auxarista != nullptr) {
-                cout << "Origen: " << auxarista->verOrigen->valor << endl;
-                cout << "Destino: " << auxarista->verDestino->valor << endl;
-                auxarista = auxarista->siguiente;
-            }
-        }
-        cout << endl;
-        auxver = auxver->siguiente;
-    }
-    *//*
-    int matriz[3][2];
-    int cont=0;
-    for (int x = 0; x < 3; x++) {
-        for (int y = 0; y < 2; y++) {
-            matriz[x][y] = cont;
-            cont++;
-        }
-    }
-    for (int x = 0; x < 3; x++) {
-        for (int y = 0; y < 2; y++) {
-            cout<< matriz[x][y]<< " ";
-        }
-        cout << endl;
-    }*/
-    /*
-    if(llenarGrafo(mapa)) {
-        cout << "Completado correctamente" << endl;
-    }
-    
-    Vertice* auxver = grafito->cabeza;
-    while (auxver != nullptr) {
-        cout << "Valor: " << auxver->valor << endl;
-        cout << "X: " << auxver->posicionX << endl;
-        cout << "Y: " << auxver->posicionY << endl;
-        if (auxver->cabezaArista != nullptr) {
-            Arista* auxarista = auxver->cabezaArista;
-            while (auxarista != nullptr) {
-                cout << "Origen: " << auxarista->verOrigen->valor << endl;
-                cout << "Destino: " << auxarista->verDestino->valor << endl;
-                auxarista = auxarista->siguiente;
-            }
-        }
-        cout << endl;
-        auxver = auxver->siguiente;
-    }*/
-
     inicializar();
     while (!quit)
     {
@@ -1362,6 +1435,6 @@ int main(int argc, char** argv)
         leerEvento();
     }
     finalizar();
-    
+
     return 0;
 }
