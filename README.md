@@ -69,6 +69,7 @@ Parámetros: No recibe.
   
   6. Análisis de resultados:	
   
+  -------------------OBJETIVOS DE LA PRIMERA FASE--------------------  
 * Objetivo: Crear sus propios personajes en sprites con una animación basica de movimiento en horizontal.  
   Condición: Completado.  
   Proceso: Cada uno diseñó su propio personaje y lo realizamos en sprites en la página Piskel.  
@@ -132,7 +133,7 @@ Razón: Se creó el árbol (grafo) pero no se creó el algortimo para buscar el 
 
 * Objetivo: Crear tres niveles más del juego con mapas diferentes.  
 Condición: Completado.  
-Proceso: Se crearon 3 mapas nuevos y se implementaron igual que el primero. 
+Proceso: Se crearon 3 mapas nuevos y se implementaron igual que el primero.  
 
 * Objetivo: Visualizar una recompensa oculta, mediante un grafo si el jugador toma una ruta a un destino definido.
 Condición: Completado.  
@@ -146,4 +147,24 @@ Proceso: En un panel a la derecha de la pantalla se muestran las vidas, recompen
 Condición: Completado.  
 Proceso: Se diseñó una pantalla de inicio en la que se puede escoger cualquiera de los cuatro personajes capturando el click del mouse, y de la misma forma se puede escoger el mapa (laberinto) en el cual se desea jugar.  
 
-   
+-------------------OBJETIVOS DE LA TERCERA FASE--------------------   
+* Objetivo: Formato de archivo binario para guardar la partida.  
+Condición: Completado.  
+Proceso: Se utilizó la librería <fstream para generar un archivo cada vez que se seleccione la opción "Crear partida", hasta que se alcance el límite de 4 registrados.  
+
+* Objetivo: Se guardan las posiciones en el juego de enemigos y jugador.  
+Condición: Completado.  
+Proceso: Para cada partida guardada en el archivo binario se guardó toda la información de los enemigos, el jugador y la cantidad de recompensas y vidas que posee.   
+  
+* Objetivo: Se pueden guardar 4 estados del juego con nombre.  
+Condición: Completado.  
+Proceso: Se crean 4 archivos con la información de la partida en cada uno, y se le da la opción al usuario de elegir cuál partida cargar por el nombre.  
+
+* Objetivo: Seleccionar jugador antes de iniciar la partida.   
+Condición: Completado.  
+Proceso: Antes de iniciar a jugar se solicita el nombre del jugador, y posteriormente puede elegir el personaje que desea utilizar.  
+
+* Objetivo: Rankin de los 5 mejores.  
+Condición: Completado.  
+Proceso: El usuario puede elegir ver el ranking de partidas y se le muestra el ranking.  
+
